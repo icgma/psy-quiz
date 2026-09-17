@@ -624,10 +624,9 @@ function render(){
   else if(curTab==="essay")renderSubjective("essay");
   else if(curTab==="cases")renderSubjective("cases");
   else renderWrong();
-  window.scrollTo({top:0});
 }
 
-function goTab(k){curTab=k;render()}
+function goTab(k){curTab=k;render();window.scrollTo({top:0})}
 function ansSingle(qi,oi){
   if(store.single[qi]!==undefined)return;
   store.single[qi]=oi;saveStore();render();
@@ -646,7 +645,7 @@ function toggleShuffle(){
       for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp}
     }
   });
-  render();
+  render();window.scrollTo({top:0});
 }
 function saveText(type,qi,val){
   var rec=store[type][qi]||{};rec.text=val;store[type][qi]=rec;
@@ -659,9 +658,9 @@ function markSub(type,qi,m){var rec=store[type][qi]||{};rec.mark=m;store[type][q
 function redoOne(type,qi){delete store[type][qi];saveStore();render()}
 function resetType(t){
   if(!confirm("确定重置本部分的所有作答记录吗？"))return;
-  store[t]={};saveStore();render();
+  store[t]={};saveStore();render();window.scrollTo({top:0});
 }
-function resetAll(){store={single:{},judge:{},essay:{},cases:{}};saveStore();render()}
+function resetAll(){store={single:{},judge:{},essay:{},cases:{}};saveStore();render();window.scrollTo({top:0})}
 
 document.getElementById("totalN").textContent=SINGLE.length+JUDGE.length+ESSAY.length+CASES.length;
 render();
