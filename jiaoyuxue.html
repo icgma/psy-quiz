@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等教育学 · 广东岗前培训刷题练习</title>
+<style>
+  :root{
+    --ink:#1e4d3b;          /* 松墨绿 */
+    --ink-2:#356b54;
+    --paper:#f6f1e4;
+    --card:#fffdf6;
+    --red:#b23a2f;
+    --red-bg:#faecea;
+    --green:#2f7d5b;
+    --green-bg:#eef6f0;
+    --gold:#b98a2f;
+    --muted:#8a7f66;
+    --line:#d9cfb4;
+    --serif:"Songti SC","STZhongsong","华文中宋","SimSun","宋体",serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+    --sans:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(rgba(30,77,59,.05) 1px, transparent 1.4px),
+      linear-gradient(180deg,#f8f4e9 0%, var(--paper) 40%, #f0ecdb 100%);
+    background-size:22px 22px, auto;
+    min-height:100vh;
+    line-height:1.75;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 16px}
+
+  header{padding:34px 0 10px;text-align:center;position:relative}
+  .paper-head{
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:5px;
+    background:var(--card);
+    padding:26px 20px 22px;
+    position:relative;
+    box-shadow:0 10px 28px rgba(30,77,59,.10);
+  }
+  .paper-head .sup{font-family:var(--serif);letter-spacing:.5em;color:var(--ink-2);font-size:13px;text-indent:.5em;margin-bottom:8px}
+  .paper-head h1{font-family:var(--serif);font-size:clamp(24px,4.6vw,38px);letter-spacing:.14em;color:var(--ink);font-weight:700}
+  .paper-head h1 .dot{color:var(--red);margin:0 .08em}
+  .paper-head .sub{margin-top:10px;font-size:13px;color:var(--muted);font-family:var(--kai)}
+  .paper-head .sub b{color:var(--ink-2)}
+  .switch{
+    margin-top:14px;font-family:var(--kai);font-size:14px;
+  }
+  .switch a{color:var(--ink-2);text-decoration:none;border-bottom:1px dashed var(--ink-2)}
+  .switch a:hover{color:var(--red);border-color:var(--red)}
+  .seal{
+    position:absolute;right:14px;bottom:-16px;
+    width:62px;height:62px;border:3px solid var(--red);border-radius:6px;
+    color:var(--red);font-family:var(--kai);font-weight:700;
+    display:grid;grid-template-columns:1fr 1fr;place-items:center;
+    font-size:22px;line-height:1;transform:rotate(7deg);
+    background:rgba(255,253,246,.92);
+    box-shadow:inset 0 0 0 1px rgba(178,58,47,.35);
+    user-select:none;
+  }
+  .seal span{padding:2px}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,241,228,.94);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+    margin-top:26px;
+  }
+  .tabs{max-width:940px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;padding:13px 18px 11px;cursor:pointer;
+    font-family:var(--serif);font-size:16px;letter-spacing:.1em;
+    color:var(--muted);border-bottom:3px solid transparent;position:relative;
+    transition:color .18s;user-select:none;white-space:nowrap;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--red);font-weight:700}
+  .tab.on::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-2px;height:3px;background:var(--red);
+  }
+  .tab .n{
+    display:inline-block;min-width:20px;padding:0 5px;margin-left:6px;
+    font-family:var(--sans);font-size:11px;line-height:16px;border-radius:8px;
+    background:#e9e2cd;color:var(--muted);vertical-align:2px;
+  }
+  .tab.on .n{background:var(--red);color:#fff}
+
+  .statbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    margin:18px 0 4px;font-size:13px;color:var(--ink-2);
+  }
+  .statbar .chip{background:var(--card);border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+  .statbar .chip b{font-family:var(--serif);font-size:15px}
+  .statbar .sp{flex:1}
+  .btn{
+    font-family:var(--serif);font-size:13px;letter-spacing:.08em;cursor:pointer;
+    border:1px solid var(--ink-2);background:var(--card);color:var(--ink);
+    padding:5px 14px;border-radius:4px;transition:all .15s;user-select:none;
+  }
+  .btn:hover{background:var(--ink);color:#f6f1e4}
+  .btn.warn{border-color:var(--red);color:var(--red)}
+  .btn.warn:hover{background:var(--red);color:#fff}
+  .btn.mini{padding:2px 10px;font-size:12px}
+  .toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;font-size:13px;color:var(--ink-2)}
+  .toggle input{accent-color:var(--red);width:15px;height:15px;cursor:pointer}
+
+  .qcard{
+    background:var(--card);border:1px solid var(--line);
+    padding:20px 22px 18px;margin:16px 0;position:relative;
+    box-shadow:0 3px 10px rgba(30,77,59,.05);
+  }
+  .qcard::before{
+    content:"";position:absolute;top:0;left:0;width:100%;height:4px;
+    background:linear-gradient(90deg,var(--ink) 0 34%,var(--red) 34% 36%,transparent 36%);
+  }
+  .qhead{display:flex;gap:10px;align-items:baseline;margin-bottom:10px}
+  .qno{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--red);white-space:nowrap}
+  .qch{
+    font-size:11px;font-family:var(--kai);color:var(--ink-2);
+    border:1px solid var(--line);padding:1px 8px;border-radius:999px;background:#f2f2e6;white-space:nowrap;
+  }
+  .qtext{font-size:15.5px;font-weight:600;font-family:var(--serif);letter-spacing:.02em}
+
+  .opts{margin-top:12px;display:grid;gap:8px}
+  .opt{
+    display:flex;gap:12px;align-items:flex-start;padding:9px 12px;
+    border:1px solid var(--line);border-radius:6px;background:#fffef9;
+    cursor:pointer;transition:border-color .15s, background .15s;
+  }
+  .opt:hover{border-color:var(--ink-2);background:#f5f8f2}
+  .opt .L{
+    flex:0 0 24px;height:24px;border-radius:50%;border:1.5px solid var(--ink-2);
+    display:grid;place-items:center;font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink-2);
+    margin-top:2px;
+  }
+  .opt .T{font-size:14.5px}
+  .locked .opt{cursor:default}
+  .locked .opt:hover{border-color:var(--line);background:#fffef9}
+  .opt.pick{border-color:var(--red);background:var(--red-bg)}
+  .opt.pick .L{background:var(--red);border-color:var(--red);color:#fff}
+  .opt.right{border-color:var(--green);background:var(--green-bg)}
+  .opt.right .L{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.dim{opacity:.55}
+  .locked .opt.right:hover{border-color:var(--green)}
+
+  .fb{margin-top:12px;padding:10px 14px;border-radius:6px;font-size:14px;display:flex;gap:8px;align-items:flex-start}
+  .fb.ok{background:var(--green-bg);border:1px solid #cfe3d6;color:var(--green)}
+  .fb.no{background:var(--red-bg);border:1px solid #e8c9c4;color:var(--red)}
+  .fb .tag{font-family:var(--serif);font-weight:700;white-space:nowrap}
+
+  .exp{
+    margin-top:10px;border-left:3px solid var(--gold);
+    background:#faf6e8;padding:10px 14px;font-size:13.5px;color:#6b5d33;
+  }
+  .exp .lb{font-family:var(--kai);font-weight:700;color:var(--gold);margin-right:6px}
+
+  .jbtns{display:flex;gap:14px;margin-top:12px}
+  .jbtn{
+    flex:1;max-width:200px;padding:10px 0;text-align:center;cursor:pointer;
+    font-family:var(--kai);font-size:20px;font-weight:700;letter-spacing:.3em;text-indent:.3em;
+    border:1.5px solid var(--ink-2);border-radius:6px;color:var(--ink-2);background:#fffef9;
+    transition:all .15s;user-select:none;
+  }
+  .jbtn:hover{background:#f5f8f2;border-color:var(--ink)}
+  .locked .jbtn{cursor:default}
+  .jbtn.pick{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+  .jbtn.right{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+
+  .mat{
+    margin-top:12px;background:#f4f2e6;border:1px dashed var(--line);
+    padding:14px 16px;font-size:14px;color:#4a4433;
+  }
+  .mat .lb{font-family:var(--kai);font-weight:700;color:var(--muted);margin-right:6px}
+  .qs{margin-top:10px;font-size:14.5px;font-weight:600;font-family:var(--serif)}
+  .sheet{
+    width:100%;margin-top:12px;border:1px solid var(--line);background:#fff;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,#efe7d0 32px);
+    line-height:32px;padding:0 12px;font-family:var(--sans);font-size:14px;color:var(--ink);
+    min-height:132px;resize:vertical;outline:none;
+  }
+  .sheet:focus{border-color:var(--ink-2)}
+  .refbtns{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .ref{
+    margin-top:12px;border:1px solid #cfe3d6;background:var(--green-bg);
+    border-radius:6px;padding:14px 16px;font-size:14px;
+  }
+  .ref .lb{font-family:var(--kai);font-weight:700;color:var(--green)}
+  .ref ul{margin:8px 0 4px 0;padding-left:20px}
+  .ref li{margin:4px 0}
+  .ref .demo{margin-top:8px;padding-top:8px;border-top:1px dashed #bcd6c8;font-size:13.5px;color:#3f6653}
+  .selfmark{margin-top:10px;display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}
+  .selfmark .btn{font-size:12.5px}
+  .selfmark .btn.did{background:var(--green);border-color:var(--green);color:#fff}
+  .selfmark .btn.again{background:var(--red);border-color:var(--red);color:#fff}
+
+  .redo{margin-top:10px}
+  .redo .btn{font-size:12px}
+
+  .hero{margin-top:22px}
+  .note{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
+    padding:16px 20px;margin:14px 0;font-size:14px;
+  }
+  .note h3{font-family:var(--serif);font-size:16px;margin-bottom:8px;letter-spacing:.06em}
+  .note h3 .no{
+    display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;
+    background:var(--red);color:#fff;font-size:12px;font-family:var(--sans);margin-right:8px;vertical-align:-3px;
+  }
+  .note p,.note li{font-size:14px;color:#454f60}
+  .note ul{padding-left:20px;margin-top:6px}
+  .note li{margin:4px 0}
+  .note b{color:var(--ink)}
+  .note .k{color:var(--red);font-weight:700}
+  .note table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px}
+  .note th,.note td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+  .note th{background:#f0eddc;font-family:var(--serif)}
+  .src{font-size:12px;color:var(--muted);font-family:var(--kai);margin-top:10px}
+
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+  .scard{background:var(--card);border:1px solid var(--line);padding:14px 16px;text-align:center}
+  .scard .t{font-family:var(--kai);font-size:13px;color:var(--muted)}
+  .scard .v{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);margin-top:4px}
+  .scard .v small{font-size:13px;color:var(--muted);font-weight:400}
+  .scard.red .v{color:var(--red)}
+
+  footer{margin-top:40px;text-align:center;font-family:var(--kai);font-size:13px;color:var(--muted)}
+  footer .line{width:120px;height:1px;background:var(--line);margin:12px auto}
+
+  @media (max-width:600px){
+    .qcard{padding:16px 14px}
+    .paper-head{padding:22px 14px 20px}
+    .seal{width:50px;height:50px;font-size:17px;right:8px;bottom:-14px}
+    .jbtns{gap:10px}
+    .statbar .chip{font-size:12px;padding:3px 10px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="paper-head">
+      <div class="sup">广东省高校教师岗前培训</div>
+      <h1>高等教育学<span class="dot">·</span>刷题练习卷</h1>
+      <div class="sub">教材依据：卢晓中主编《高等教育新论》· 高等教育出版社<br>题型：<b>单选 · 判断 · 简答论述 · 案例分析</b>　全卷共 <b id="totalN">--</b> 题</div>
+      <div class="switch">两学切换 ·<a href="index.html">《高等教育心理学》刷题卷</a></div>
+      <div class="seal"><span>必</span><span>过</span><span>顺</span><span>利</span></div>
+    </div>
+  </div>
+</header>
+
+<nav><div class="tabs" id="tabs"></div></nav>
+
+<main class="wrap">
+  <div class="statbar" id="statbar"></div>
+  <div id="panel"></div>
+</main>
+
+<footer>
+  <div class="line"></div>
+  岗前培训「两学」闭卷 · 认真作答 · 逢考必过<br>
+  <span style="font-size:11px">本卷依据培训划定重点章节，从教材原文整理命制 · 生成于 2026-09</span>
+</footer>
+
+<script>
+/* ================= 题库数据（依据卢晓中《高等教育新论》重点章节） ================= */
+var SINGLE=[
+{ch:"第一章·第一节",q:"古代的高等教育主要表现为（　）。",o:["大学教育","高深学问教育","第三级教育","专业教育"],a:1,e:"高等教育历史形态依次为：古代的「高深学问教育」、中世纪至19世纪的「大学教育」、20世纪至今的「中学后教育或第三级教育」。"},
+{ch:"第一章·第一节",q:"“大学”（university）一词源于拉丁语 universitas，其本意是（　）。",o:["知识的殿堂","教师与学生行会（共同体）","高深学问","自由之学"],a:1,e:"universitas 本意为“共同体”，中世纪大学的组织形式来自城市和行会，最初即学生行会与教师行会。"},
+{ch:"第一章·第一节",q:"中世纪大学中，以法学著称、应处理商业纠纷之需而成立的是（　）。",o:["萨莱诺大学","巴黎大学","波伦亚大学","牛津大学"],a:2,e:"波伦亚大学地处商业中心，主要教授罗马法和教会法，培养法官和律师；萨莱诺大学以医学著称，巴黎大学以神学著称。"},
+{ch:"第一章·第一节",q:"1810年，威廉·冯·洪堡创办（　），提出“教学与科研统一”，标志着高校第二大职能的确立。",o:["哈勒大学","哥廷根大学","慕尼黑大学","柏林大学"],a:3,e:"1809—1810年洪堡创办柏林大学，确立“通过研究进行教学”“教学与研究统一”原则，使发展科学成为高校第二职能，并使世界科学中心转移到德国。"},
+{ch:"第一章·第二节",q:"1862年美国《莫雷尔法案》（赠地法案）的颁布，直接引发了高校第三职能的出现。该职能是（　）。",o:["培养人才","发展科学","直接为社会服务","文化传承创新"],a:2,e:"《莫雷尔法案》引导大学与农工产业结合，催生赠地学院；此后威斯康星大学“威斯康星思想”使“直接为社会服务”成为高校第三职能。"},
+{ch:"第一章·第二节",q:"现代高等学校公认的三大职能，按历史产生顺序排列正确的是（　）。",o:["发展科学→培养人才→为社会服务","培养人才→发展科学→直接为社会服务","培养人才→为社会服务→发展科学","为社会服务→培养人才→发展科学"],a:1,e:"培养人才（中世纪大学）→发展科学（1810年柏林大学）→直接为社会服务（1862年《莫雷尔法案》及威斯康星思想），三者依次产生、发展并存。"},
+{ch:"第一章·第二节",q:"“高等学校以培养人才和科学研究为依托，有目的、有计划地向社会提供学术性服务。”这一职能又被称为（　）。",o:["基本职能","派生职能或延伸职能","中介职能","辅助职能"],a:1,e:"“为社会服务”是在教学、科研职能基础上派生、延伸出来的，故称派生职能或延伸职能。"},
+{ch:"第一章·第二节",q:"英国学者纽曼在《大学的理想》（《大学的理念》）中坚持的观点是（　）。",o:["教学与科研应当统一","大学应直接为社会服务","教学是大学的唯一职能，科研与教学应相分离","大学应以培养研究生为主"],a:2,e:"纽曼认为大学为传授知识而设，“发现和教学是两种迥然不同的职能”，主张科研与教学相分离，教学是大学唯一职能。这一思想对反思今天“重科研轻教学”仍有价值。"},
+{ch:"第一章·第三节★",q:"主张教育目的应依据个人需要来确定，教育的首要目的在于发展人的理性和个性。这种观点属于（　）。",o:["社会本位论","个人本位论","文化本位论","生活本位论"],a:1,e:"个人本位论以卢梭、洛克、裴斯泰洛齐、福禄倍尔为代表；社会本位论以孔德、涂尔干、赫尔巴特为代表（其源头可追溯至柏拉图）。"},
+{ch:"第一章·第三节★",q:"社会本位论的代表人物是（　）。",o:["卢梭、洛克","裴斯泰洛齐、福禄倍尔","孔德、涂尔干、赫尔巴特","杜威、克伯屈"],a:2,e:"社会本位论盛行于19世纪下半叶，代表人物有孔德、涂尔干、赫尔巴特等，主张教育首要目的在于使个体社会化、为社会服务。"},
+{ch:"第一章·第三节★",q:"1945年哈佛大学发布《自由社会中的通识教育》报告（红皮书），提出通识教育的目的在于培养“完整的人”。下列不属于其提出的四种能力的是（　）。",o:["有效思考的能力","清晰沟通思想的能力","熟练掌握专业技能的能力","辨识普遍性价值的能力"],a:2,e:"四种能力为：有效思考、清晰沟通思想、作出明确判断、辨识普遍性价值。通识教育课程包括人文科学、社会科学、自然科学三大领域。"},
+{ch:"第一章·第三节★",q:"20世纪初，主张将西方历代经典名著作为大学课程重要内容的芝加哥大学校长是（　）。",o:["赫钦斯","艾略特","劳威尔","博克"],a:0,e:"赫钦斯在芝加哥大学推行“名著课程”（巨著课程），通过研习经典实现通识教育理念，是永恒主义课程观的代表。"},
+{ch:"第一章·第三节★",q:"按照1997年《国际教育标准分类法》（ISCED），第三级教育第一阶段中的5B类教育是指（　）。",o:["为研究做准备的理论型教育","高科技要求的专业教育","面向实际、实用技术型的教育","博士研究生教育"],a:2,e:"5A类为理论型（5A1为研究做准备、5A2为高科技专业教育），5B类为实用技术型；第二阶段（序数6）相当于博士生教育。"},
+{ch:"第一章·第三节★",q:"关于学术型人才与职业型人才，下列说法正确的是（　）。",o:["学术型人才培养质量高于职业型","两者是类型差异而非层次差异，无优劣之分","职业型人才只应由专科层次培养","我国职业型院校质量普遍偏低"],a:1,e:"学术性与职业性无优劣之分，只是类型不同；在我国“重学轻术”传统下，类型差别曾被异化为学历层次的高低差异，这是需要纠正的。"},
+{ch:"第二章·第一节",q:"下列大学精神文化元素中，属于实践层面的是（　）。",o:["大学精神","大学理念","校训","学风、教风、校风"],a:3,e:"大学精神、理念、校训属于价值层面（申明价值诉求）；校风、学风、教风、管理作风属于实践层面（指导如何践行）。"},
+{ch:"第二章·第一节",q:"大学精神文化最显性的一种形式是（　）。",o:["大学建筑","校训","社团活动","管理制度"],a:1,e:"校训是大学精神文化最显性的形式，如哈佛“与柏拉图为友，与亚里士多德为友，更要与真理为友”，清华“自强不息，厚德载物”。"},
+{ch:"第二章·第一节",q:"关于大学精神与大学理念的关系，正确的是（　）。",o:["任何一所大学都有自己的大学精神","任何一所大学一般都有自己的理念，但不是每所大学都有大学精神","大学精神等同于大学理念","大学理念源于大学精神的消失"],a:1,e:"大学精神是优秀的文化传统；理念更多表达对大学的认识与办学主张。理念积极引领大学发展时会积淀为大学精神，即“精神源于理念、理念基于精神”。"},
+{ch:"第二章·第一节",q:"我国大学校训存在的两个明显误区是（　）。",o:["形式化与雷同化","政治化与商业化","古文化与洋文化","过长与过短"],a:0,e:"调查显示：某校85%在校生、72%教师不知或记不全校训（形式化）；256所大学中192所为“四词八字”口号式，8所同为“团结、勤奋、求实、创新”（雷同化）。"},
+{ch:"第二章·第一节",q:"“任何类型的大学都是遗传与环境的产物。”这一论断说明大学精神文化具有（　）。",o:["整合性","兼容性","发展性","个性"],a:2,e:"阿什比此言是大学精神文化“发展性”的经典表述——遗传即优秀的文化传统（继承的发展），环境即与时俱进（创新的发展）。"},
+{ch:"第二章·第一节",q:"大学精神文化的兼容并包，其最高层次是追求（　）。",o:["同一化","并存","“和而不同”的融合","互不干涉"],a:2,e:"兼容依次表现为共存→认同→互补→融合，融合并非融为一体，而是“和而不同”的学术生态；兼容也非同化（一种文化否定另一种文化）。"},
+{ch:"第二章·第一节",q:"从文化自然走向文化自觉，大学特色化一般要经历的路径是（　）。",o:["大学品牌→大学特色→特色目标","大学特色→特色目标→大学品牌","特色目标→大学特色→大学品牌","大学特色→大学品牌→特色目标"],a:2,e:"办学初期提出的只能是“特色目标”，经长期自觉追求形成真正的“大学特色”，最终获得公认度和影响力，成为“大学品牌”。"},
+{ch:"第三章·第四节",q:"傅勒（福勒）编制《教师关注问卷》，提出教师关注阶段理论。其四阶段的正确顺序是（　）。",o:["教学前关注→早期生存关注→教学情境关注→关注学生","早期生存关注→教学前关注→关注学生→教学情境关注","关注学生→教学情境关注→早期生存关注→教学前关注","教学前关注→教学情境关注→早期生存关注→关注学生"],a:0,e:"教师关注的事物依一定次序更迭：教学前关注（职前）→早期生存关注（实习/初任）→教学情境关注（关注教学表现）→关注学生（真正关怀学生）。"},
+{ch:"第三章·第四节",q:"叶澜教授以自我专业发展意识为标准划分教师发展阶段，其中被称为“教师发展关键期”、特点是“骤变与适应”的是（　）。",o:["虚拟关注阶段","生存关注阶段","任务关注阶段","自我更新关注阶段"],a:1,e:"“生存关注”阶段即初任教师阶段，需实现由学生到正式教师的角色转换，是专业发展的关键期。五阶段为：非关注→虚拟关注→生存关注→任务关注→自我更新关注。"},
+{ch:"第三章·第四节",q:"伯顿的教师发展阶段论认为，教师进入教学的第2至4年，知识较丰富、开始寻求新技巧以迎合学生多样化需求。这一阶段是（　）。",o:["求生存阶段","调整阶段","成熟阶段","停滞阶段"],a:1,e:"伯顿三阶段：求生存阶段（第1年）、调整阶段（第2—4年，变得开放、较能关心学生）、成熟阶段（第5年及以上，能不断尝试新方法）。"},
+{ch:"第三章·第四节",q:"费斯勒教师生涯循环论中，教师“工作满足程度逐渐下降，开始怀疑自己是否选对了职业，职业倦怠可能产生”的阶段是（　）。",o:["引导阶段","能力建立阶段","生涯挫折阶段","生涯低落阶段"],a:2,e:"费斯勒八阶段：职前教育→引导→能力建立→热情高涨的专业成长→生涯挫折（倦怠可能产生）→稳定和停滞（“做一天和尚撞一天钟”）→生涯低落→生涯退出。"},
+{ch:"第三章·第四节",q:"高校教师绩效评价的三类指标中，作为评价核心和根本的是（　）。",o:["资格素质指标","职责指标","效能指标","师德指标"],a:2,e:"三类指标：效能指标（投入—产出，是核心和根本）、职责指标（基本要求）、资格素质指标（前提保证），三者相互影响、相互关联。"},
+{ch:"第三章·第四节",q:"关于教学与科研的关系，教材的观点是：从发生学看两者是“源”与“流”，从高校职能定位看则是（　）。",o:["并重关系","“本”与“末”，教学为本","科研为本","替代关系"],a:1,e:"没有科研就缺乏深刻且与时俱进的教学（源流关系）；但从高校职能定位看，教学与科研是“本末”关系，教学为本、科研为辅，不能让源流关系颠倒了本末关系。"},
+{ch:"第三章·第四节",q:"美国高校教师学术系列（教授系列）的职称层次是（　）。",o:["讲师—副教授—教授","助理教授—副教授—教授","助教—讲师—教授","助理教授—教授—讲席教授"],a:1,e:"美国学术系列分助理教授（合同制）、副教授、教授（后两者为终身制）；从助理教授到副教授一般须在6年内完成，否则须离校——即“非升即走”。"},
+{ch:"第三章·第四节",q:"我国高校教师人事制度变革的四大动向可概括为：评聘统筹、非升即走、末位淘汰和（　）。",o:["职称终身制","终身聘任后评审","按资历晋升","单一评审通道"],a:1,e:"四大变革动向：评聘统筹（评聘分开/新的评聘合一）、非升即走、末位淘汰、终身聘任后评审（Post-Tenure Review），共同构成滚动式竞争机制。"},
+{ch:"第五章·第一节★",q:"根据布卢姆等课程论专家的观点，显性课程与隐性课程的区别不包括（　）。",o:["学习结果上：学术性知识 vs 非学术性知识","学习计划上：有计划有组织 vs 无计划","学习环境上：课堂教学 vs 学校自然与社会环境","授课教师上：教授 vs 副教授"],a:3,e:"显性课程通过课堂知识传递获得学术性知识；隐性课程通过学校环境（组织、文化、师生互动）潜移默化，学生大多无意接受其中经验。区别在于结果、计划、环境三方面，与教师职称无关。"},
+{ch:"第五章·第一节★",q:"下列关于通识教育与专业教育关系的表述，正确的是（　）。",o:["通识教育是专业教育的附庸，可有可无","专业教育是通识教育的下位概念","两者只能相互对立、非此即彼","通识教育承担着补充纠正、延伸深化、灵魂统帅专业教育的三重使命"],a:3,e:"通识教育的三重使命：作为专业教育的补充与纠正（并列关系）、延伸与深化（专业教育为上位）、灵魂与统帅（专业教育为下位），两者相辅相成。"},
+{ch:"第五章·第一节★",q:"高校专业形成的线路，苏联表现为“职业—专业—课程”，美国则表现为（　）。",o:["职业—课程—专业","课程—职业—专业","专业—课程—职业","职业—专业同步"],a:0,e:"美国高校对社会新职业需求首先以课程（选修课）形式回应，待职业形成规模、条件成熟才正式设置专业，故本科阶段专业意识淡薄，以“主修领域”代替。"},
+{ch:"第五章·第一节★",q:"当前发达国家高校课程结构改革的普遍做法是（　）。",o:["压缩选修课比例","增大选修课在课程体系中的比重","取消必修课","取消通识课程"],a:1,e:"如MIT化工专业选修课比例从1951年的9%升至1985年的61%；法国本科课程中选修课比例也达40%—60%，且任选课比重不断增大。"},
+{ch:"第五章·第一节★",q:"提出“知识就是力量”、被视为近代科学教育思想先声的是（　）。",o:["培根","斯宾塞","赫胥黎","洪堡"],a:0,e:"培根（16世纪末17世纪初英国）提出“知识就是力量”；19世纪科学教育思想的代表人物是斯宾塞和赫胥黎，他们抨击古典主义教育，主张科学知识最有价值。"},
+{ch:"第六章·第三节★",q:"黄甫全将教学方法分为三个层次。下列属于“技术性教学方法”的是（　）。",o:["启发式教学方法","发现教学方法","讲授法、谈话法、演示法、实验法","外语课的听说法"],a:2,e:"原理性（启发式、注入式、发现式——无固定程序、起指导作用）；技术性（讲授、谈话、演示、参观、实验、练习、讨论等——起中介作用）；操作性（听说法、写生法等特定课程独有——可操作）。"},
+{ch:"第六章·第三节★",q:"巴班斯基将教学方法分为三大类，其中第二组是（　）。",o:["组织和实施学习认识活动的方法","激发和形成动机的方法","检查和自我检查的方法","感知的方法"],a:1,e:"巴班斯基三大类：①组织和实施学习认识活动的方法（口述法、直观法、归纳法、探索法等）；②激发和形成动机的方法；③教学中检查和自我检查的方法。"},
+{ch:"第六章·第三节★",q:"潘懋元先生对高校教学方法的分类中，课堂教学方法包括（　）。",o:["讲授、讨论、实验","参观、调查、实习","阅读、复习、练习、辅导","平时检查、考试、答辩"],a:0,e:"潘懋元五类：课堂教学方法（讲授讨论实验）、现场教学方法（参观调查实习）、自学与自学指导方法、科研训练方法（科研活动、论文与设计）、学业检查与评定方法。"},
+{ch:"第六章·第三节★",q:"关于讲授法，下列说法错误的是（　）。",o:["它是历史最久远、应用最广泛的经典教学方法","有利于在短时间内系统传授大量知识、发挥教师主导作用","其他教学方法成功的最好前提是优质的讲授法教学","讲授法已过时，应尽量用小组教学、案例教学取代"],a:3,e:"教材认为“减少讲授、多用新方法效果就好”是简单而荒唐的想法，优质讲授是其他方法成功的前提；但讲授要注意目的性、科学组织内容、语言清晰精练生动、寓启发于讲授之中。"},
+{ch:"第六章·第三节★",q:"案例教学法起源于20世纪20年代，由（　）所倡导。",o:["牛津大学","哈佛商学院","芝加哥大学","柏林大学"],a:1,e:"案例教学法由哈佛商学院于20世纪20年代倡导，80年代受师资培育重视；其基本过程含准备、实施、总结三阶段，课堂讨论是中心环节，教师是“导演”、学生是“演员”。"},
+{ch:"第六章·第三节★",q:"从教学进度和教学方法匹配的基本节奏看，小组教学特别适用于（　）。",o:["课程开始的导入阶段","课程教学的中期深化阶段","课程的最后总结阶段","任何阶段均同样适用"],a:1,e:"小组教学适用于教师主导的导入阶段之后、由学生主导的深化阶段；经准备也可用于开始或尾声，但不具一般性。"},
+{ch:"第六章·第三节★",q:"教师选择教学方法的依据，不包括（　）。",o:["教学的目的和任务","教学内容","师生条件与特点","个人好恶与从众心理"],a:3,e:"选择教学方法应依据：①教学目的和任务；②教学内容；③师生条件与特点；④教学方法的功能和类型；⑤教学时间与教学条件。要综合考虑，不能仅凭好恶或经验。"}
+];
+
+var JUDGE=[
+{ch:"第一章·第一节",q:"从对象上说，古代高等教育是极少数特权阶层的教育，接受教育是一种特权和身份的象征。",a:true,e:"正确。古代高等教育（高深学问教育）由特权阶层独占；到大学教育阶段是少数精英的教育；第三级教育阶段才“人人都有权利接受高等教育”。"},
+{ch:"第一章·第一节",q:"中世纪至19世纪，西方高等教育机构只有大学这一种组织，高等教育与大学教育是同义词。",a:true,e:"正确。12—13世纪中世纪大学产生后，直到19世纪西方高等教育机构只有大学，高等教育便体现为大学教育。"},
+{ch:"第一章·第二节",q:"高等学校的三大职能是从大学产生之日起就同时存在的。",a:false,e:"错误。三大职能随社会发展依次形成：培养人才（中世纪大学）→发展科学（1810柏林大学）→直接为社会服务（1862《莫雷尔法案》/威斯康星思想），三者发展并存而非同时产生。"},
+{ch:"第一章·第二节",q:"“直接为社会服务”又被称为高等学校的派生职能或延伸职能。",a:true,e:"正确。它是教学职能和科研职能的延伸，以培养人才和科学研究为依托向社会提供学术性服务。"},
+{ch:"第一章·第二节",q:"当代任何一所高校都应同等承担三大职能，并使三者在一校内部平衡并存。",a:false,e:"错误。没有一所高校能同时圆满承担三大职能，应通过校际分工与合作，在不同层次类型高校间实现职能协调共存，各高校需合理定位。"},
+{ch:"第一章·第三节★",q:"个人本位论与社会本位论的共同缺陷在于割裂了社会与个体之间的相互依存性。",a:true,e:"正确。两种价值观各有合理与片面之处，应将社会发展需要与人的发展需要结合起来，实现辩证统一。"},
+{ch:"第一章·第三节★",q:"通才教育与专才教育是截然对立的两种教育理念和实践模式。",a:false,e:"错误。两者并不截然对立，任何社会阶段都需要通才与专才，二者是高等教育人才培养一个问题的两个方面，应并存互补。"},
+{ch:"第一章·第三节★",q:"高等教育毛入学率超过15%即进入大众化阶段。1999年扩招后我国高等教育快速从精英阶段过渡到大众化阶段。",a:true,e:"正确。教材指出2001年我国毛入学率达13.3%，2008年达23%，已从精英阶段快速过渡到大众化阶段（马丁·特罗：15%以下精英、15%—50%大众化、50%以上普及）。"},
+{ch:"第二章·第一节",q:"处于观念形态的大学精神文化是虚无缥缈的，无法通过大学的人、事、物来承载。",a:false,e:"错误。大学精神文化可以通过人（校长办学思想）、事（教学管理制度、师生关系）、物（大学建筑及其“物语”）来承载和践行。"},
+{ch:"第二章·第一节",q:"一所大学的校训应具有相对稳定性，但其内涵应随时代发展不断丰富。",a:true,e:"正确。校训“朝令夕改”会导致教育实践无所适从；如清华校训“自强不息、厚德载物”出自《周易》，今天又被赋予争创一流的时代新内涵。"},
+{ch:"第二章·第一节",q:"大学精神文化的整合，意味着要把大学内部多元与个性的文化整合成“清一色”。",a:false,e:"错误。整合以共同核心价值为基础形成功能整合系统，大学内部文化应丰富多彩，形成既个性纷呈又整体有序的“马赛克”式特色。"},
+{ch:"第三章·第四节",q:"处于傅勒“早期生存关注”阶段的教师，关注的重点是如何在新环境中生存下来。",a:true,e:"正确。该阶段教师关心班级经营管理、教学内容的精通熟练、上级视察评价、学生与同事的接纳等，往往比较焦虑紧张、压力较大。"},
+{ch:"第三章·第四节",q:"高校教师绩效评价只需采用全国统一的指标体系，不必考虑学校层次、类型和学科差异。",a:false,e:"错误。绩效评价应坚持指标内涵的个性化原则，研究型大学与高职高专、基础学科与应用学科的指标体系及权重应有较大差异，趋同将造成千校一面。"},
+{ch:"第三章·第四节",q:"美国高校学术系列中，助理教授为合同制，副教授和教授为终身制。",a:true,e:"正确。从助理教授到副教授须在6年内完成（两阶段申请），否则须离开学校；副教授到教授无明确时间限制。"},
+{ch:"第六章·第三节★",q:"教学方法既包括教师的教法，也包括学生的学法，是师生共同活动方式的总称。",a:true,e:"正确。教学方法是师生为实现教学目的和任务要求，在教学活动中所采取的行为方式的总称，教法与学法统一。"},
+{ch:"第六章·第三节★",q:"叶圣陶孜孜以求的教学境界是“教是为了不教”。",a:true,e:"正确。夸美纽斯追求“教师少教、学生多学”，叶圣陶追求“教是为了不教”，这是教学方法运用的最高理想。"}
+];
+
+var ESSAY=[
+{ch:"第一章·第一节",q:"【简答】简述高等教育三个历史形态及其基本内涵。",pts:["①古代：高深学问教育——各国高等学术中心聚徒讲学，培养官吏与神学人士，对象为极少数特权阶层，东方为政府寺庙控制、西方以私学为主；","②中世纪至19世纪：大学教育——大学独占高等教育领域，致力于高深学术研究、培养精英，学术性凸显，大学自治与学术自由是价值保障；","③20世纪至今：第三级教育——大学、专业学院、技术学院、师范院校等各层次类型院校均属高等教育机构，人人都有权利接受高等教育，肩负精英与大众教育双重任务，保持自治传统的同时兼顾社会需要。"],demo:"记忆线索：对象从“特权阶层→精英→人人”；机构从“学术中心→大学单一→多元院校”；管理从“政府/私学→自治自由→自治兼顾社会”。"},
+{ch:"第一章·第二节",q:"【简答】简述高等学校三大职能的历史演变。",pts:["①培养人才（教学中心）：中世纪大学产生至18世纪，培养人才是大学唯一职能，大学是专业训练中心；","②发展科学（学术中心）：1810年洪堡创办柏林大学，提出“教学与科研统一”“通过研究进行教学”，建立讲座制和习明纳（seminar），发展科学成为第二职能，世界科学中心随之转移到德国；","③直接为社会服务（服务中心）：1862年美国《莫雷尔法案》催生赠地学院；1904年范海斯任威斯康星大学校长提出“威斯康星计划”，大学为本州服务，“威斯康星思想”使直接为社会服务成为第三职能；","④现代：三大职能发展并存、内涵不断丰富，“为社会服务”是教学、科研职能的派生与延伸。"],demo:"答题时点出标志性事件与人物：柏林大学—洪堡—教学科研统一；莫雷尔法案—赠地学院—威斯康星思想—范海斯。"},
+{ch:"第一章·第三节★",q:"【论述】试述个人本位论与社会本位论的主要观点，并论述两种价值观的辩证统一。",pts:["①个人本位论：教育目的依据个人需要确定，首要目的在于发展人的理性和个性，个人价值高于社会价值；代表：卢梭、洛克、裴斯泰洛齐、福禄倍尔；","②社会本位论：教育目的依据社会需要确定，首要目的在于使个体社会化，培养对社会有用的公民；代表：孔德、涂尔干、赫尔巴特（源头可溯至柏拉图）；","③评价：两者各有合理性与片面性。个人本位论有反封建、个性解放的历史进步意义，但排斥社会对教育的制约；社会本位论强调个人发展的社会依赖性，但易导致教育短视、抹杀个性；共同缺陷是割裂了社会与个体的相互依存性；","④辩证统一：人既是社会历史的创造者又受社会制约，教育的任务在于把社会发展需要与人的发展需要结合起来，引导个人成为社会生活的主体；适应应当是建立在尊重个体能动性基础上的、有批判有选择的适应。"],demo:"论述题采用“观点—代表人物—合理面—片面面—统一”五步结构，最后落到我国教育方针“人的全面发展与社会需要的统一”。"},
+{ch:"第一章·第三节★",q:"【简答】简述专才教育与通才教育（通识教育）的关系，并说明对我国本科教育的启示。",pts:["①专才教育：以掌握某一学科基本理论知识技能、能从事某种职业为目标；缺点是知识面窄、缺乏灵活调整职业前途的潜力；","②通才教育（通识教育）：源于古希腊自由教育，20世纪经美国通识教育运动革新（赫钦斯名著课程；1945年哈佛《自由社会中的通识教育》报告）；","③关系：不是截然对立，社会发展任何阶段都需要通才与专才，两者是同一问题的两个方面，应并存互补；","④对我国启示：新中国初期照搬苏联专才教育模式造成学科专业狭窄；90年代中期开展“加强大学生文化素质教育”改革；当前按大类招生、低年级通识+高年级宽口径专业（如北大元培计划、复旦学院）成为主流做法，“宽口径、厚基础”是改革方向。"],demo:"可结合本校的大类招生、通识选修课模块举例，体现“理论+实际”。"},
+{ch:"第二章·第一节",q:"【简答】简述大学精神文化的基本构成及价值层面与实践层面元素的关系。",pts:["①大学文化=大学群体习得且共有的一切观念和行为；大学精神文化元素包括大学精神、理念、校训（价值层面）和校风、学风、教风、管理作风（实践层面）；","②价值层面着重体现和申明一所大学的价值诉求；实践层面从实践角度告诉人们应如何践行价值诉求；","③两者密切关联、相辅相成：如北大“兼容并包”理念形成“民主、自由”校风，清华“厚德载物”理念对应“严谨、认真”校风，南开“允公允能”对应“开拓、活泼”校风；","④大学精神文化可显性彰显（校训最显性），也可隐性体现（建筑环境等物化形态、制度规则）。"],demo:"举例时优先用“北大—清华—南开”一组，一个例句即可同时覆盖两个层面。"},
+{ch:"第二章·第一节",q:"【简答】简述大学精神文化的时代特征。",pts:["①发展性：包括继承的发展（优秀文化传统是“遗传”）和创新的发展（赋予新内涵、创设新文化），阿什比“任何类型的大学都是遗传与环境的产物”；","②兼容性：对多元精神文化和各种学术观点兼容并包，表现为共存→认同→互补→融合的递进，最高层次是“和而不同”；兼容不是同化；","③整合性：以共同的核心价值为基础，整合价值层面诸元素、价值与实践层面元素、精神—制度—器物文化，形成功能整合的精神文化系统；","④个性：大学特色即文化特色；要区分特点、特色项目与特色；特色形成有自然生成与自觉追求两种方式；路径为“特色目标→大学特色→大学品牌”。"],demo:"四个特征各配一个关键词记忆：遗传环境、和而不同、核心价值、特色品牌。"},
+{ch:"第三章·第四节",q:"【论述】试述高校教师职业能力发展阶段理论（傅勒、伯顿、费斯勒），并谈谈对青年教师规划职业生涯的启示。",pts:["①傅勒关注阶段论（《教师关注问卷》）：教学前关注→早期生存关注→教学情境关注→关注学生；","②叶澜五阶段：非关注→虚拟关注→生存关注（初任关键期，骤变与适应）→任务关注→自我更新关注；","③伯顿三阶段：求生存（第1年）→调整（第2—4年）→成熟（第5年及以上）；","④费斯勒八阶段生涯循环：职前教育→引导→能力建立→热情高涨的专业成长→生涯挫折（职业倦怠易发）→稳定和停滞→生涯低落→生涯退出；","⑤启示：不同阶段工作重心不同，青年教师应正视“生存关注”的焦虑，主动寻求师徒结对与教学培训；中期警惕生涯挫折与停滞，通过教学创新、科研参与走向自我更新；对照阶段明确目标，缩短成熟周期。"],demo:"四个理论按“关注什么—几年—循环全程”三个维度记忆；启示部分至少写三条并联系自身。"},
+{ch:"第三章·第四节",q:"【简答】简述高校教师绩效评价的指标体系及应坚持的基本原则。",pts:["①三类指标：效能指标（投入—产出，评价的核心和根本）、职责指标（应承担责任与完成任务情况）、资格素质指标（前提保证）；","②五项原则：价值均衡原则（防止重科研轻教学、重理论轻应用等倾向）；个性化原则（因校因学科而异，防千校一面）；公开性公正性原则（考虑学科差异与职业阶段差异）；独立性可操作性原则（指标不交叉、可操作有据可查）；动态性发展性原则（随科技、政策、学校战略调整）。"],demo:"口诀记忆：“效能核心、三类指标；均衡、个性、公开、独立、动态五原则”。"},
+{ch:"第五章·第一节★",q:"【简答】简述当前高校课程变革的共同趋势。",pts:["①拓宽基础，加强普通教育：美国哈佛核心课程（外国文化、历史研究、文学艺术、伦理思辨、自然科学、社会分析六大领域）、英国基尔大学“基础学年”、法国“衣架式教育”；","②跨越学科，实施课程整合：以问题（课题）为切入点贯通各门课程，锻炼独立工作与解决问题能力；","③优化结构，实行真正选修：增大选修课比重（MIT化工专业选修比例9%→61%），增大任选课比重，按层次组合开课；","④注重人文，实施“全人教育”：MIT人文艺术社会科学课程占校级基本要求学分的40%，开设STS课程；","⑤面向未来，课程设置国际化与信息化：国际化课程目标与内容、本土化民族文明、加强外语与信息课程。"],demo:"五大趋势各记一个代表：哈佛核心课程—课题贯通—MIT选修比例—MIT人文40%—日本信息处理必修。"},
+{ch:"第六章·第三节★",q:"【论述】试述高校常用教学方法（讲授法、小组教学、案例教学）的特点，并说明选择教学方法的依据。",pts:["①讲授法：历史最久、应用最广；能在短时间内系统传授大量知识、发挥教师主导作用；不足是不利因材施教、难以充分互动；基本要求：讲授有明确目的性、科学组织内容、语言清晰精练生动、寓启发于讲授；","②小组教学法：将班级临时划分为小团队共同完成学习任务；让更多学生参与、增强归属感、便于自主学习；适用于课程中期深化阶段，组织要求高；","③案例教学法（哈佛商学院首创）：围绕教学目的将真实情景典型化处理，通过独立研究和相互讨论提高分析与解决问题能力；教师是导演、学生是演员，包括准备、实施、总结三阶段，课堂讨论是中心环节；","④选择依据：教学目的和任务；教学内容；师生条件与特点；教学方法的功能和类型；教学时间与教学条件。"],demo:"每种方法按“优点—局限—基本要求/适用阶段”三件套作答；选择依据五条可归纳为“目的、内容、人、法、时空”。"}
+];
+
+var CASES=[
+{ch:"第一章·第二节",t:"“重科研轻教学”——高校职能与绩效评价",
+bg:"某高校在职称评审中主要看论文数量、项目经费，教学只需“完成工作量即可”。王老师讲课深受学生欢迎、指导学生竞赛屡获佳绩，但因论文偏少多年评不上教授；而个别教师几乎不给学生答疑、备课敷衍，却凭几篇高分论文快速晋升。渐渐地，学院里愿意在本科教学上花心思的教师越来越少。",
+q:"问题：(1) 运用高等学校职能的相关理论分析该校做法的问题。(2) 结合教师绩效评价的原则提出改进建议。",
+pts:["①高校三大职能（培养人才、发展科学、直接为社会服务）中，人才培养是根本任务，教学工作是学校经常性的中心工作；从职能定位看，教学与科研是“本”与“末”的关系，教学为本，不能让发生学上的“源流”关系取代教育机构中的“本末”关系；","②该校评价导向使教师行为偏离人才培养中心，正是教材批评的“重科研、轻教学”倾向；纽曼思想与1998年博耶报告对研究型大学本科教育质量的警告说明此弊病具有普遍性；","③改进建议（对应绩效评价五原则）：坚持价值均衡原则，合理分配教学与科研权重，防止“重科研轻教学、重理论轻应用”；坚持个性化原则，对不同类型、层次学科采用差异化指标；指标设计公开公正、独立可操作；动态调整；即使研究型大学也要把教学和人才培养放在第一位，如把教授为低年级授课纳入考核。"]},
+{ch:"第三章·第四节",t:"“从焦虑到从容”——青年教师职业发展",
+bg:"李老师入职第一年，最担心“学生是否接纳我”“督导听课怎么评价我”，每次上课紧张失眠；第三、四年，他已能熟练组织课堂，开始琢磨用什么教法吸引学生；第八年，他能根据学生基础差异设计分层任务，课堂提问兼顾不同水平学生，还主动申请教改项目；第十五年，有教师劝他“评上教授就轻松了，别再折腾”，他反而牵头建设一流课程，带起了青年教师工作坊。",
+q:"问题：运用教师职业能力发展阶段理论（傅勒、伯顿、费斯勒）分析李老师的成长历程，并说明各阶段学校应提供何种支持。",
+pts:["①傅勒四阶段：第一年“学生是否接纳我”处于早期生存关注阶段；第三、四年关注教法与教学表现处于教学情境关注阶段；第八年关注学生差异处于关注学生阶段——教师走向成熟的标志；","②伯顿三阶段：第1年求生存、第2—4年调整、第5年以上成熟，李老师历程与此吻合；","③费斯勒八阶段：从引导、能力建立到热情高涨的专业成长；第十五年对应成熟发展，需警惕进入“稳定和停滞”与“生涯挫折”，李老师主动教改、建设一流课程属于持续“自我更新”（叶澜：自我更新关注阶段）；","④学校支持：初任期——入职培训、师徒结对、减少非教学负担（渡过生存关注关键期）；成长期——教学竞赛、教研活动、进修深造（能力建立）；成熟期——教改项目、传帮带平台、终身聘任后的发展性评价，防止职业倦怠与停滞。"]},
+{ch:"第一章·第三节★",t:"“大类招生改革”——通识教育与专业教育",
+bg:"某综合性大学推行本科教学改革：按文理大类招生，入学第一学年不分专业，全体学生修读通识教育核心课程（含人文、社科、自然、艺术等领域）；第二学年末根据兴趣和成绩确定专业，高年级实行宽口径专业教育。有教师质疑：“这样浪费专业学习时间，学生会不专。”也有企业反映：“这些毕业生后劲足、适应面广。”",
+q:"问题：运用通识教育与专业教育的相关理论，评价该校改革并回应质疑。",
+pts:["①理论上，通识教育与专业教育并非对立：通识教育承担着对专业教育“补充纠正、延伸深化、灵魂统帅”的三重使命；哈佛1945年《自由社会中的通识教育》即主张培养“完整的人”（有效思考、清晰沟通、明确判断、辨识普遍价值四种能力）；","②该校做法与国际经验一致：哈佛核心课程、北大元培计划、复旦学院均为“低年级通识+高年级宽口径专业”模式；针对我国曾照搬苏联专才模式、专业过窄的历史，这是“宽口径、厚基础”的纠偏；","③回应“不专”质疑：通才与专才是同一问题的两个方面，现代社会职业更替加速，宽厚基础恰是职业适应力和后劲的来源（材料中企业反馈即为佐证）；专业教育并未削弱，而是后移并与通识融通；","④建议：通识课程应避免“水课拼盘”，注重经典与思维训练；专业课程体现通识精神（专业教育通识化），实现两者统合。"]},
+{ch:"第六章·第三节★",t:"“方法的困惑”——教学方法的选择与运用",
+bg:"新教师小周观摩了几堂“示范课”后认为：讲授法是落后的，应该全部用小组讨论和案例教学。于是在《教育学基础》第一课上，他未做任何讲解就把学生分组讨论“什么是教育”，学生缺乏背景知识，讨论冷场、聊天居多，最后他仓促总结，教学目标落空。老教师提醒他：“方法没有好坏，关键看怎么用、用在哪里。”",
+q:"问题：(1) 分析小周教学失败的原因。(2) 说明选择和运用教学方法的依据及对讲授法的正确认识。",
+pts:["①失败原因：违背了教学方法选择的依据——未考虑教学目的任务（概念性新知适宜讲授）、未考虑学生条件（第一课缺乏知识准备）、未考虑课程阶段（小组教学一般适用于有知识基础后的中期深化阶段，而非导入阶段）；把方法“新旧”等同于“好坏”；","②选择依据五条：教学目的和任务、教学内容、师生条件与特点、方法的功能与类型、教学时间与条件；须综合考虑；","③对讲授法的正确认识：它是历史最久、应用最广的经典方法，能短时间内系统传授知识、发挥教师主导作用；其不足多因教师运用不当，“其他教学方法成功的最好前提是优质的讲授法”；运用时注意目的明确、科学组织内容、语言清晰精练生动、寓启发于讲授之中；","④建议：新授课概念原理以讲授为主并辅以启发提问；在学生具备基础后的深化阶段再采用小组讨论、案例教学（案例教学三阶段：准备—实施—总结，课堂讨论是中心环节）。"]},
+{ch:"第二章·第一节",t:"“千校一面的校训”——大学精神文化建设",
+bg:"某新建本科院校为迎接评估，一周内征集确定了校训“团结、勤奋、求实、创新”。调查发现，多数师生说不全校训含义；全国与本校校训完全相同或仅语序不同的高校达数十所。校长还要求把校园里原有草坪改为“国际化广场”、老教学楼外墙贴上玻璃幕墙以显“现代气息”，师生普遍感觉“没有了学校的味道”。",
+q:"问题：运用大学精神文化的相关知识，分析该校在校训和校园建设中存在的问题，并提出改进建议。",
+pts:["①校训问题：正是教材指出的我国大学校训两大误区——形式化（师生不知校训、未践行）与雷同化（“四词八字”口号式，256所高校中192所雷同），反映办学思想理念的匮乏，导致千校一面；","②校园建设问题：大学建筑等“物”是隐性课程和大学精神文化的承载，第一要素是基本功能，更高要求是具有诉说思想理念的“物语”；贴玻璃幕墙、铲草坪割断了学校的文化记忆，忽视了精神文化的隐性育人功能（布卢姆：隐性课程以学校环境潜移默化影响学生）；","③改进建议：校训应立足于学校历史与核心价值凝练，避免雷同，并保持相对稳定、随时代丰富内涵；加强践行——将校训精神融入校风学风教风建设、学生活动与管理制度；校园建设应尊重历史文脉，让“物”承载教育意蕴；走“特色目标→大学特色→大学品牌”的文化自觉之路，而非表面化改造。"]}
+];
+
+/* ================= 状态与渲染 ================= */
+var LS_KEY="gdjyx-lx-v1";
+var TABS=[
+  {k:"home",n:"考情速览"},
+  {k:"single",n:"单选题"},{k:"judge",n:"判断题"},
+  {k:"essay",n:"简答论述"},{k:"cases",n:"案例分析"},
+  {k:"wrong",n:"错题重做"}
+];
+var curTab="home";
+var store=loadStore();
+var order={single:idxList(SINGLE),judge:idxList(JUDGE),essay:idxList(ESSAY),cases:idxList(CASES)};
+var shuffled=false;
+
+function idxList(arr){var a=[];for(var i=0;i<arr.length;i++)a.push(i);return a}
+function loadStore(){
+  try{var s=JSON.parse(localStorage.getItem(LS_KEY)||"{}");
+    return {single:s.single||{},judge:s.judge||{},essay:s.essay||{},cases:s.cases||{}};
+  }catch(e){return {single:{},judge:{},essay:{},cases:{}}}
+}
+function saveStore(){try{localStorage.setItem(LS_KEY,JSON.stringify(store))}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+function DATA(t){return t==="single"?SINGLE:t==="judge"?JUDGE:t==="essay"?ESSAY:CASES}
+
+function countStat(t){
+  var d=store[t],data=DATA(t),done=0,ok=0;
+  for(var k in d){var qi=+k;if(!d.hasOwnProperty(k)||!(qi in data))continue;
+    if(t==="single"){done++;if(d[k]===data[qi].a)ok++}
+    else if(t==="judge"){done++;if(d[k]===data[qi].a)ok++}
+    else{done++;if(d[k]==="got")ok++}
+  }
+  return {done:done,ok:ok,total:data.length};
+}
+function wrongList(t){
+  var d=store[t],data=DATA(t),w=[];
+  for(var k in d){if(!d.hasOwnProperty(k))continue;var qi=+k;
+    if(t==="single"){if(d[k]!==data[qi].a)w.push(qi)}
+    else if(t==="judge"){if(d[k]!==data[qi].a)w.push(qi)}
+  }
+  return w;
+}
+
+function renderTabs(){
+  var h="";
+  TABS.forEach(function(tb){
+    var badge="";
+    if(tb.k==="single")badge='<span class="n">'+SINGLE.length+"</span>";
+    if(tb.k==="judge")badge='<span class="n">'+JUDGE.length+"</span>";
+    if(tb.k==="essay")badge='<span class="n">'+ESSAY.length+"</span>";
+    if(tb.k==="cases")badge='<span class="n">'+CASES.length+"</span>";
+    if(tb.k==="wrong"){
+      var w=wrongList("single").length+wrongList("judge").length;
+      if(w>0)badge='<span class="n">'+w+"</span>";
+    }
+    h+='<div class="tab'+(curTab===tb.k?" on":"")+'" onclick="goTab(\''+tb.k+'\')">'+tb.n+badge+"</div>";
+  });
+  document.getElementById("tabs").innerHTML=h;
+}
+
+function statChip(t,label){
+  var s=countStat(t);
+  var rate=s.done?Math.round(s.ok/s.done*100):0;
+  return '<span class="chip">'+label+"　已做 <b>"+s.done+"</b>/"+s.total+"　正确 <b>"+s.ok+"</b>　正确率 <b>"+rate+"%</b></span>";
+}
+
+function renderStatbar(){
+  var el=document.getElementById("statbar");
+  if(curTab==="home"){el.innerHTML="";return}
+  if(curTab==="wrong"){
+    var w=wrongList("single").length+wrongList("judge").length;
+    el.innerHTML='<span class="chip">错题本　待消灭 <b style="color:var(--red)">'+w+'</b> 题</span><span class="sp"></span>'+
+      '<span class="chip" style="font-family:var(--kai)">答对后自动移出错题本</span>';
+    return;
+  }
+  var label={single:"单选题",judge:"判断题",essay:"简答论述",cases:"案例分析"}[curTab];
+  var right='<span class="sp"></span>';
+  if(curTab==="single"||curTab==="judge"){
+    right+='<label class="toggle"><input type="checkbox" id="shuf" onchange="toggleShuffle()"'+(shuffled?" checked":"")+'>乱序刷题</label>';
+  }
+  right+='<button class="btn warn" onclick="resetType(\''+curTab+'\')">重置本部分</button>';
+  el.innerHTML=statChip(curTab,label)+right;
+}
+
+function qheadHTML(no,ch){
+  return '<div class="qhead"><span class="qno">'+no+"</span><span class=\"qch\">"+esc(ch)+"</span></div>";
+}
+
+function renderSingle(){
+  var h="";
+  order.single.forEach(function(qi,pos){
+    var q=SINGLE[qi],pick=store.single[qi];
+    var locked=(pick!==undefined);
+    h+='<div class="qcard"><div class="opts-holder">'+qheadHTML(pos+1,q.ch);
+    h+='<div class="qtext">'+esc(q.q)+"</div>";
+    h+='<div class="opts'+(locked?" locked":"")+'">';
+    q.o.forEach(function(o,oi){
+      var cls="opt";
+      if(locked){
+        if(oi===q.a)cls+=" right";
+        else if(oi===pick)cls+=" pick";
+        else cls+=" dim";
+      }
+      h+='<div class="'+cls+'" onclick="ansSingle('+qi+","+oi+')"><span class="L">'+String.fromCharCode(65+oi)+'</span><span class="T">'+esc(o)+"</span></div>";
+    });
+    h+="</div>";
+    if(locked){
+      var ok=pick===q.a;
+      h+='<div class="fb '+(ok?"ok":"no")+'"><span class="tag">'+(ok?"✓ 答对了":"✗ 答错了")+"</span><span>正确答案："+String.fromCharCode(65+q.a)+"</span></div>";
+      h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    }
+    h+="</div></div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderJudge(){
+  var h="";
+  order.judge.forEach(function(qi,pos){
+    var q=JUDGE[qi],pick=store.judge[qi];
+    var locked=(pick!==undefined);
+    h+='<div class="qcard">'+qheadHTML(pos+1,q.ch);
+    h+='<div class="qtext">'+esc(q.q)+"</div>";
+    h+='<div class="jbtns'+(locked?" locked":"")+'">';
+    var rightVal=q.a?0:1;
+    ["正确","错误"].forEach(function(txt,val){
+      var cls="jbtn";
+      if(locked){
+        if(val===rightVal)cls+=" right";
+        else if(val===(pick?0:1))cls+=" pick";
+      }
+      h+='<div class="'+cls+'" onclick="ansJudge('+qi+','+val+')">'+txt+"</div>";
+    });
+    h+="</div>";
+    if(locked){
+      var ok=pick===q.a;
+      h+='<div class="fb '+(ok?"ok":"no")+'"><span class="tag">'+(ok?"✓ 答对了":"✗ 答错了")+"</span><span>正确答案："+(q.a?"正确":"错误")+"</span></div>";
+      h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    }
+    h+="</div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderSubjective(type){
+  var arr=DATA(type),st=store[type],h="";
+  order[type].forEach(function(qi,pos){
+    var q=arr[qi],rec=st[qi]||{};
+    h+='<div class="qcard">'+qheadHTML(pos+1,q.ch);
+    if(type==="cases"){
+      h+='<div class="qtext" style="font-size:16.5px">【案例分析】'+esc(q.t)+"</div>";
+      h+='<div class="mat"><span class="lb">材料：</span>'+esc(q.bg)+"</div>";
+      h+='<div class="qs">'+esc(q.q)+"</div>";
+    }else{
+      h+='<div class="qtext">'+esc(q.q)+"</div>";
+    }
+    h+='<textarea class="sheet" rows="5" placeholder="（先在此写下你的答案要点，再对照参考答案）" oninput="saveText(\''+type+"',"+qi+',this.value)">'+esc(rec.text||"")+"</textarea>";
+    h+='<div class="refbtns">';
+    if(!rec.show)h+='<button class="btn" onclick="showRef(\''+type+"',"+qi+')">对照参考答案</button>';
+    else h+='<button class="btn mini" onclick="hideRef(\''+type+"',"+qi+')">收起参考答案</button>';
+    h+="</div>";
+    if(rec.show){
+      h+='<div class="ref"><span class="lb">【参考答案要点】</span><ul>';
+      q.pts.forEach(function(p){h+="<li>"+esc(p)+"</li>"});
+      h+="</ul>";
+      if(q.demo)h+='<div class="demo">'+esc(q.demo)+"</div>";
+      h+="</div>";
+      h+='<div class="selfmark">自评掌握情况：';
+      h+='<button class="btn'+(rec.mark==="got"?" did":"")+'" onclick="markSub(\''+type+"',"+qi+',\'got\')">✓ 已掌握</button>';
+      h+='<button class="btn'+(rec.mark==="again"?" again":"")+'" onclick="markSub(\''+type+"',"+qi+',\'again\')">✗ 需巩固</button>';
+      h+="</div>";
+    }
+    h+="</div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderWrong(){
+  var ws=wrongList("single"),wj=wrongList("judge"),h="";
+  if(!ws.length&&!wj.length){
+    h='<div class="note" style="text-align:center;padding:50px 20px"><h3 style="text-align:center">🎉 错题本是空的</h3><p style="text-align:center">做完单选题、判断题后，答错的题目会自动收进来。<br>在下方重做，答对即可移出错题本。</p></div>';
+  }
+  ws.forEach(function(qi,i){
+    var q=SINGLE[qi],pick=store.single[qi];
+    h+='<div class="qcard">'+qheadHTML("错"+(i+1),q.ch)+"<div class=\"qtext\">"+esc(q.q)+"</div>";
+    h+='<div class="opts locked">';
+    q.o.forEach(function(o,oi){
+      var cls="opt";
+      if(oi===q.a)cls+=" right";else if(oi===pick)cls+=" pick";else cls+=" dim";
+      h+='<div class="'+cls+'"><span class="L">'+String.fromCharCode(65+oi)+'</span><span class="T">'+esc(o)+"</span></div>";
+    });
+    h+="</div>";
+    h+='<div class="fb no"><span class="tag">✗ 曾答错</span><span>正确答案：'+String.fromCharCode(65+q.a)+"</span></div>";
+    h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    h+='<div class="redo"><button class="btn mini warn" onclick="redoOne(\'single\','+qi+')">重做此题</button></div></div>';
+  });
+  wj.forEach(function(qi,i){
+    var q=JUDGE[qi],pick=store.judge[qi];
+    h+='<div class="qcard">'+qheadHTML("错"+(ws.length+i+1),q.ch)+"<div class=\"qtext\">"+esc(q.q)+"</div>";
+    h+='<div class="fb no"><span class="tag">✗ 曾答错</span><span>你选了「'+(pick?"正确":"错误")+"」，正确答案："+(q.a?"正确":"错误")+"</span></div>";
+    h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    h+='<div class="redo"><button class="btn mini warn" onclick="redoOne(\'judge\','+qi+')">重做此题</button></div></div>';
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderHome(){
+  var s1=countStat("single"),s2=countStat("judge"),s3=countStat("essay"),s4=countStat("cases");
+  var total=s1.total+s2.total+s3.total+s4.total;
+  document.getElementById("totalN").textContent=total;
+  var h='<div class="hero">';
+  h+='<div class="note"><h3><span class="no">1</span>考情与命题范围</h3>'+
+     "<ul>"+
+     "<li><b>考试形式：</b>《高等教育学》与《高等教育心理学》同为广东岗前培训“两学”，<b>全省统一命题、闭卷考试</b>，约 2 小时，满分 100 分、60 分合格。</li>"+
+     "<li><b>指定教材：</b>卢晓中主编《高等教育新论》（高等教育出版社，2016）。</li>"+
+     "<li><b>本卷命题范围</b>（培训划定的重点章节，题目全部从教材原文整理）：</li>"+
+     "</ul>"+
+     "<table><tr><th>重点章节</th><th>核心考点</th></tr>"+
+     "<tr><td>第一章 高等教育与高等学校<br>（重点：第三节 P19-20）</td><td>高等教育三形态；三大职能演变；个人本位与社会本位；专才与通才（通识教育）；学术型与职业型人才</td></tr>"+
+     "<tr><td>第二章 第一节 大学精神文化的含义</td><td>价值/实践两层元素；大学精神与理念；校训两误区；发展性·兼容性·整合性·个性；特色化路径</td></tr>"+
+     "<tr><td>第三章 第四节 高校教师职业发展（P78-）</td><td>傅勒·叶澜·伯顿·费斯勒阶段论；绩效评价三指标五原则；评聘统筹·非升即走等四大动向</td></tr>"+
+     "<tr><td>第五章 第一节 高校课程理论（P135-）</td><td>课程类型（显性/隐性等）；通识与专业教育；人文与科学教育；课程变革五大趋势</td></tr>"+
+     "<tr><td>第六章 第三节 高校教学方法</td><td>教学方法三层分类；巴班斯基与潘懋元分类；讲授法·小组教学·案例教学法；选择依据</td></tr></table>"+
+     '<div class="src">注：教材实际页码中，P135-136 属第五章第一节“高校课程变革趋势”部分；第六章第三节为“高校教学方法”（P178-189）。本卷已按实际内容覆盖。</div></div>';
+  h+='<div class="note"><h3><span class="no">2</span>答题要领</h3>'+
+     "<ul>"+
+     "<li><b>单选/判断：</b>抓标志性事件与人物——柏林大学·洪堡·1810、莫雷尔法案·1862、威斯康星思想、哈佛红皮书·1945、傅勒/伯顿/费斯勒、巴班斯基、潘懋元。</li>"+
+     "<li><b>简答论述：</b>按“定义→要点分条→代表人物/标志性事件→评价或启示”展开；论述题（个人本位vs社会本位、教师发展阶段论、教学方法）务必联系实际。</li>"+
+     "<li><b>案例分析：</b>三步走——①指认理论；②逐句对应材料分析；③提出对策。重科研轻教学、青年教师成长、通识改革、方法选择、校训雷同是高频案例情境。</li>"+
+     "</ul></div>";
+  h+='<div class="note"><h3><span class="no">3</span>我的练习进度'+((s1.done||s2.done||s3.done||s4.done)?"":"（本机自动保存）")+"</h3>";
+  h+='<div class="summary">'+
+     '<div class="scard"><div class="t">单选题</div><div class="v">'+s1.ok+'<small> / '+s1.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">判断题</div><div class="v">'+s2.ok+'<small> / '+s2.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">简答论述 · 已掌握</div><div class="v">'+s3.ok+'<small> / '+s3.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">案例分析 · 已掌握</div><div class="v">'+s4.ok+'<small> / '+s4.total+" 题</small></div></div>";
+  var doneAll=s1.done+s2.done+s3.done+s4.done;
+  h+='<div class="scard red"><div class="t">客观题总正确率</div><div class="v">'+((s1.done+s2.done)?Math.round((s1.ok+s2.ok)/(s1.done+s2.done)*100):0)+'%</div></div>'+
+     '<div class="scard"><div class="t">累计已练</div><div class="v">'+doneAll+'<small> / '+total+" 题</small></div></div></div>";
+  h+='<div style="margin-top:14px"><button class="btn warn" onclick="if(confirm(\'确定清空全部作答记录吗？\'))resetAll()">清空全部记录，从头再刷</button></div>';
+  h+="</div></div>";
+  document.getElementById("panel").innerHTML=h;
+}
+
+function render(){
+  renderTabs();renderStatbar();
+  if(curTab==="home")renderHome();
+  else if(curTab==="single")renderSingle();
+  else if(curTab==="judge")renderJudge();
+  else if(curTab==="essay")renderSubjective("essay");
+  else if(curTab==="cases")renderSubjective("cases");
+  else renderWrong();
+  window.scrollTo({top:0});
+}
+
+function goTab(k){curTab=k;render()}
+function ansSingle(qi,oi){
+  if(store.single[qi]!==undefined)return;
+  store.single[qi]=oi;saveStore();render();
+}
+function ansJudge(qi,val){
+  if(store.judge[qi]!==undefined)return;
+  store.judge[qi]=(val===0);saveStore();render();
+}
+function toggleShuffle(){
+  var cb=document.getElementById("shuf");
+  shuffled=!!cb.checked;
+  ["single","judge"].forEach(function(t){
+    order[t]=idxList(DATA(t));
+    if(shuffled){
+      var a=order[t];
+      for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp}
+    }
+  });
+  render();
+}
+function saveText(type,qi,val){
+  var rec=store[type][qi]||{};rec.text=val;store[type][qi]=rec;
+  clearTimeout(saveText._t);
+  saveText._t=setTimeout(saveStore,400);
+}
+function showRef(type,qi){var rec=store[type][qi]||{};rec.show=true;store[type][qi]=rec;saveStore();render()}
+function hideRef(type,qi){var rec=store[type][qi]||{};rec.show=false;store[type][qi]=rec;saveStore();render()}
+function markSub(type,qi,m){var rec=store[type][qi]||{};rec.mark=m;store[type][qi]=rec;saveStore();render()}
+function redoOne(type,qi){delete store[type][qi];saveStore();render()}
+function resetType(t){
+  if(!confirm("确定重置本部分的所有作答记录吗？"))return;
+  store[t]={};saveStore();render();
+}
+function resetAll(){store={single:{},judge:{},essay:{},cases:{}};saveStore();render()}
+
+document.getElementById("totalN").textContent=SINGLE.length+JUDGE.length+ESSAY.length+CASES.length;
+render();
+</script>
+</body>
+</html>
