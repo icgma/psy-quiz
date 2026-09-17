@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>两学考点速记 · 广东岗前培训</title>
+<style>
+  :root{
+    --ink:#1c3151;          /* 藏青 */
+    --ink-2:#33517c;
+    --paper:#f6f1e4;        /* 米纸 */
+    --card:#fffdf6;
+    --red:#b23a2f;          /* 朱砂 */
+    --red-bg:#faecea;
+    --green:#2f7d5b;        /* 竹青 */
+    --green-bg:#eef6f0;
+    --gold:#b98a2f;
+    --muted:#8a7f66;
+    --line:#d9cfb4;
+    --serif:"Songti SC","STZhongsong","华文中宋","SimSun","宋体",serif;
+    --kai:"KaiTi","STKaiti","楷体","BKaiKai",serif;
+    --sans:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(rgba(28,49,81,.05) 1px, transparent 1.4px),
+      linear-gradient(180deg,#f8f4e9 0%, var(--paper) 40%, #f3ecdb 100%);
+    background-size:22px 22px, auto;
+    min-height:100vh;
+    line-height:1.75;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 16px}
+
+  /* ===== 卷头 ===== */
+  header{padding:34px 0 10px;text-align:center;position:relative}
+  .paper-head{
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:5px;
+    background:var(--card);
+    padding:26px 20px 22px;
+    position:relative;
+    box-shadow:0 10px 28px rgba(28,49,81,.10);
+  }
+  .paper-head .sup{font-family:var(--serif);letter-spacing:.5em;color:var(--ink-2);font-size:13px;text-indent:.5em;margin-bottom:8px}
+  .paper-head h1{font-family:var(--serif);font-size:clamp(24px,4.6vw,38px);letter-spacing:.14em;color:var(--ink);font-weight:700}
+  .paper-head h1 .mdot{color:var(--red);margin:0 .08em}
+  .paper-head .sub{margin-top:10px;font-size:13px;color:var(--muted);font-family:var(--kai)}
+  .paper-head .sub b{color:var(--ink-2)}
+  .seal{
+    position:absolute;right:14px;bottom:-16px;
+    width:62px;height:62px;border:3px solid var(--red);border-radius:6px;
+    color:var(--red);font-family:var(--kai);font-weight:700;
+    display:grid;grid-template-columns:1fr 1fr;place-items:center;
+    font-size:22px;line-height:1;transform:rotate(7deg);
+    background:rgba(255,253,246,.92);
+    box-shadow:inset 0 0 0 1px rgba(178,58,47,.35);
+    user-select:none;
+  }
+  .seal span{padding:2px}
+  .switch{margin-top:14px;font-family:var(--kai);font-size:14px}
+  .switch a{color:var(--ink-2);text-decoration:none;border-bottom:1px dashed var(--ink-2)}
+  .switch a:hover{color:var(--red);border-color:var(--red)}
+
+  /* ===== 导航 ===== */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,241,228,.94);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+    margin-top:26px;
+  }
+  .tabs{max-width:940px;margin:0 auto;display:flex;align-items:center}
+  .tab{
+    flex:0 0 auto;padding:13px 18px 11px;cursor:pointer;
+    font-family:var(--serif);font-size:16px;letter-spacing:.1em;
+    color:var(--muted);border-bottom:3px solid transparent;position:relative;
+    transition:color .18s;user-select:none;white-space:nowrap;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--red);font-weight:700}
+  .tab.on::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-2px;height:3px;background:var(--red);
+  }
+  .tab .n{
+    display:inline-block;min-width:20px;padding:0 5px;margin-left:6px;
+    font-family:var(--sans);font-size:11px;line-height:16px;border-radius:8px;
+    background:#e9e2cd;color:var(--muted);vertical-align:2px;
+  }
+  .tab.on .n{background:var(--red);color:#fff}
+
+  /* ===== 工具条 ===== */
+  .toolbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    margin:18px 0 4px;font-size:13px;color:var(--ink-2);
+  }
+  .toolbar .sp{flex:1}
+  .chip{background:var(--card);border:1px solid var(--line);padding:4px 12px;border-radius:999px;cursor:pointer;user-select:none}
+  .chip:hover{border-color:var(--ink-2)}
+  .chip.on{background:var(--ink);color:#f6f1e4;border-color:var(--ink)}
+  .chip b{font-family:var(--serif);font-size:15px}
+  .toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;font-size:13px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+  .toggle input{accent-color:var(--red);width:15px;height:15px;cursor:pointer}
+  .btn{
+    font-family:var(--serif);font-size:13px;letter-spacing:.08em;cursor:pointer;
+    border:1px solid var(--ink-2);background:var(--card);color:var(--ink);
+    padding:5px 14px;border-radius:4px;transition:all .15s;user-select:none;
+  }
+  .btn:hover{background:var(--ink);color:#f6f1e4}
+  .btn.warn{border-color:var(--red);color:var(--red)}
+  .btn.warn:hover{background:var(--red);color:#fff}
+  .pbar{height:6px;background:#e9e2cd;border-radius:3px;overflow:hidden;margin:10px 0 2px}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#4aa378);border-radius:3px;transition:width .3s}
+  .hint{font-family:var(--kai);font-size:12.5px;color:var(--muted);margin:6px 0 0}
+
+  /* ===== 章节 ===== */
+  .chap{margin:26px 0 6px;display:flex;align-items:baseline;gap:10px}
+  .chap h2{font-family:var(--serif);font-size:19px;letter-spacing:.08em;font-weight:700}
+  .chap h2 .star{color:var(--red)}
+  .chap .cp{font-size:12px;color:var(--muted)}
+  .chap .cp b{color:var(--green);font-family:var(--serif)}
+
+  .pt{
+    background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--line);
+    padding:14px 18px 12px;margin:10px 0;position:relative;
+    box-shadow:0 3px 10px rgba(28,49,81,.05);
+    display:flex;gap:12px;align-items:flex-start;
+    transition:border-color .2s;
+  }
+  .pt.done{border-left-color:var(--green);background:linear-gradient(90deg,var(--green-bg),var(--card) 30%)}
+  .dot{
+    flex:0 0 auto;width:22px;height:22px;margin-top:4px;cursor:pointer;
+    border:2px solid var(--muted);border-radius:50%;background:transparent;
+    position:relative;user-select:none;
+  }
+  .dot:hover{border-color:var(--green)}
+  .pt.done .dot{border-color:var(--green);background:var(--green)}
+  .pt.done .dot::after{
+    content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+    color:#fff;font-size:13px;font-weight:700;line-height:1;
+  }
+  .pt .bd{flex:1;min-width:0}
+  .pt .k{font-family:var(--serif);font-weight:700;font-size:15.5px;letter-spacing:.02em;margin-bottom:2px}
+  .pt.done .k{color:var(--muted)}
+  .pt .v{font-size:14.5px;color:#2c3f5e}
+  .kw{color:var(--red);font-weight:600;border-bottom:1px dashed rgba(178,58,47,.5)}
+  body.recite .kw{
+    background:var(--ink-2);color:transparent;border-bottom:none;
+    border:1px dashed rgba(255,255,255,.4);
+    border-radius:3px;padding:0 5px;cursor:pointer;user-select:none;
+    transition:background .15s;
+  }
+  body.recite .kw:hover{background:var(--ink)}
+  body.recite .kw.show{background:var(--red-bg);color:var(--red)}
+  .pt.done .v{color:#6d7a8f}
+  .empty{padding:40px 0;text-align:center;font-family:var(--kai);color:var(--muted)}
+
+  footer{margin-top:44px;text-align:center;font-family:var(--kai);font-size:13px;color:var(--muted)}
+  footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px dashed var(--ink-2)}
+  @media (max-width:560px){
+    .pt{padding:12px 12px 10px}
+    .toolbar{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="paper-head">
+      <div class="sup">广东高校教师岗前培训 · 两学</div>
+      <h1>两学考点<span class="mdot">·</span>速记</h1>
+      <div class="sub">依据张积家《高等教育心理学》与卢晓中《高等教育新论》重点章节整理 · 共 <b id="totalN">0</b> 条考点</div>
+      <div class="switch">配套刷题 ·<a href="index.html">《高等教育心理学》刷题卷</a> ·<a href="jiaoyuxue.html">《高等教育学》刷题卷</a></div>
+      <div class="seal"><span>考</span><span>点</span><span>速</span><span>记</span></div>
+    </div>
+  </header>
+</div>
+
+<nav><div class="tabs" id="tabs"></div></nav>
+
+<div class="wrap">
+  <div class="toolbar">
+    <label class="toggle"><input type="checkbox" id="recite">背诵模式</label>
+    <span class="chip f on" data-f="all">全部</span>
+    <span class="chip f" data-f="todo">未掌握</span>
+    <span class="chip f" data-f="done">已掌握</span>
+    <span class="sp"></span>
+    <span class="chip prog" id="prog"></span>
+    <button class="btn warn mini" id="reset">重置进度</button>
+  </div>
+  <div class="pbar"><i id="pfill" style="width:0%"></i></div>
+  <div class="hint">背诵模式：关键词会变成墨块，点一下才显示——先自己回忆，再点开对照。左侧圆圈点一下＝打卡已掌握。</div>
+
+  <div id="panel"></div>
+
+  <footer>考点内容与两份刷题卷同源 · ★ 为培训划定重点章节 · 进度保存在本机浏览器<br><a href="index.html">心理学刷题卷</a> 　<a href="jiaoyuxue.html">教育学刷题卷</a></footer>
+</div>
+
+<script>
+/* ================= 数据 ================= */
+var SUB=[
+{id:"psy",name:"心理学",full:"高等教育心理学",chapters:[
+{t:"第一章 概论",ps:[
+{k:"研究对象",v:"高等教育情境中【学生的学】与【教师的教】的基本心理规律——既研究学，也研究教，不能只取一方。"},
+{k:"高等教育的特点",v:"【专业性、高深性、创新性、职业性】；「基础性」是基础教育的特征，不属于高等教育特点。"},
+{k:"观察法",v:"在【自然的教育情境】中有目的、有计划地记录行为表现，是最基本、最常用的研究方法。"},
+{k:"实验法／调查法／个案法",v:"实验法【主动控制或改变条件】引起心理现象；调查法借问卷、访谈【间接】收集资料；个案法对【单一对象】深入、长期研究（如跟踪一位新教师三年）。"},
+{k:"教育性（发展性）原则",v:"研究过程和结果都【不得损害】大学生、教师的身心健康与利益。"}
+]},
+{t:"第二章 教师心理",ps:[
+{k:"教师成长三阶段（福勒和布朗）",v:"【关注生存→关注情境→关注学生】；能否【关注学生】（因材施教）是教师成熟的重要标志。"},
+{k:"职业倦怠三维度",v:"【情绪耗竭（核心维度）】、去个性化（冷漠待人、把学生「当物一样」）、低个人成就感。"},
+{k:"角色冲突 vs 角色超载",v:"冲突＝多种期望【相互矛盾】、难以兼顾；超载＝角色期望【过多】、超出时间与能力的承受范围。"},
+{k:"教师威信",v:"形成后需要【维护与发展】：言行一致、完善专业能力、尊重学生、勇于自我批评；威信【可以重建】，但重建比维护更难。"},
+{k:"专家型教师的特征",v:"教学效能感【高】、职业情感投入【深】、成就感【强】，职业倦怠（尤其情绪耗竭）显著更低。"}
+]},
+{t:"第三章 大学生心理发展特点",ps:[
+{k:"皮亚杰认知发展四阶段",v:"【感知运动（0–2岁）→前运算（2–7岁）→具体运算（7–11、12岁）→形式运算（11、12岁以后）】，顺序不可颠倒、不可跨越。"},
+{k:"大学生的认知发展",v:"处于【形式运算阶段】，【抽象逻辑思维】趋于成熟并占主导；思维的【独立性、批判性】明显增强，不盲从权威。"},
+{k:"前运算阶段的特点",v:"【自我中心性】——难以站在他人视角看问题，「三山实验」是经典证据。"},
+{k:"埃里克森：大学生的发展危机",v:"青年期（12–18岁）＝【自我同一性对角色混乱】；成年早期（18–25岁）＝【亲密感对孤独感】。"},
+{k:"维果茨基「最近发展区」",v:"【现有发展水平】与【潜在发展水平】（成人指导下可达）之间的差距；教学应【走在发展的前面】，让学生「跳一跳，够得着」。"},
+{k:"心理发展的特性",v:"关键期的存在体现【不平衡性】；个体之间能力、性格、思维风格各不相同体现【差异性】，要求因材施教。"}
+]},
+{t:"第四章 学习理论",ps:[
+{k:"正强化／负强化／惩罚／消退",v:"正强化＝【呈现愉快刺激】使行为增多；负强化＝【撤销厌恶刺激】使行为增多；惩罚＝使行为【减少】；消退＝【撤除强化物】不予理睬（如对课堂怪相集体不理睬）。"},
+{k:"负强化 ≠ 惩罚",v:"两者方向相反：负强化使行为【增加】，惩罚使行为【降低】——考试最爱挖的坑。"},
+{k:"布鲁纳",v:"倡导【发现学习】，让学生主动探索、发现结论；主张掌握学科的【基本结构】（基本概念、原理及其关系）。"},
+{k:"奥苏贝尔：有意义学习的实质",v:"新知识与原有认知结构中的适当观念建立【非人为的】（合乎逻辑）和【实质性的】（非字面）联系。"},
+{k:"先行组织者",v:"先于学习任务呈现的【上位固着点】，为新的学习提供固着观念，促进新旧知识联系，实现有意义接受学习。"},
+{k:"班杜拉：观察学习",v:"通过观察榜样的行为及其结果习得新行为，经历【注意→保持→再现→动机】四过程；强化分直接强化、【替代强化】（榜样被强化）与自我强化。"},
+{k:"建构主义学习环境四要素",v:"【情境、协作、会话、意义建构】——学习应在真实情境中进行，意义建构是最终目标。"},
+{k:"罗杰斯（人本主义）",v:"促进学习的三个心理气氛条件：【真诚一致、同理心（共情）、无条件积极关注】；倡导非指导性教学，反对权威与指令。"}
+]},
+{t:"第五章 知识的获得",ps:[
+{k:"陈述性知识 vs 程序性知识",v:"陈述性知识回答【「是什么」】（北京是中国首都）；程序性知识回答【「怎么做」】（操作显微镜、编写程序），往往「只可意会难以言传」。"},
+{k:"学习迁移",v:"【一种学习对另一种学习的影响】；「举一反三、闻一知十、触类旁通」都是典型的（正）迁移。"}
+]},
+{t:"第六章 思维与问题解决",ps:[
+{k:"问题解决四阶段",v:"【发现问题→分析问题→提出假设→检验假设】；发现问题是起点，也是个体思维发展水平的重要标志。"},
+{k:"功能固着",v:"只看到物体的【惯常功能】、想不到新用途（图钉盒只当容器、想不到当烛台）；是定势的特殊表现形式，阻碍问题解决。"}
+]},
+{t:"第七章 创造性",ps:[
+{k:"创造性三特征",v:"【流畅性】（单位时间内想法的数量）、【变通性】（想法类别的多样性）、【独特性】（新颖独到、与众不同）。"},
+{k:"智力与创造性的关系",v:"高智力是高创造性的【必要条件而非充分条件】；两者呈非线性关系——高创造性者智商一般中上，高智商不一定有高创造性。"}
+]},
+{t:"第八章 品德",ps:[
+{k:"品德的心理结构（四要素）",v:"道德认知是【基础和核心】；道德情感是【动力】；道德意志是【精神力量】；道德行为是【最终目的】和衡量品德水平的【重要标志】。"},
+{k:"科尔伯格三水平六阶段",v:"前习俗水平＝【服从与惩罚定向、工具性利己定向】；习俗水平＝【好孩子定向、维护社会秩序定向】；「好孩子定向」属于【习俗水平】。"},
+{k:"德育疏导原则",v:"循循善诱、以理服人，从提高道德认识入手、因势利导，而【不是简单堵塞禁止】；德育要促进知行统一。"},
+{k:"品德发展的特点",v:"具有【可塑性和反复性】，环境和教育的变化会引起品德变化——德育要长期坚持、正确对待反复。"}
+]},
+{t:"第十一章 学习动机",ps:[
+{k:"耶克斯—多德森定律",v:"动机与效率呈【倒U型】关系；任务越难，最佳动机水平越【低】，任务容易则可偏高。"},
+{k:"马斯洛需要层次",v:"由低到高：生理→安全→归属与爱→尊重→【自我实现】（最高）；前四种是【缺失性需要】，【求知、审美、自我实现】是成长性需要；层次并非绝对，可相互重叠。"},
+{k:"麦克利兰成就需要理论",v:"三种后天需要：【成就需要】（追求卓越）、权力需要（影响支配他人）、亲和需要（建立友好关系）。"},
+{k:"自我效能感（班杜拉）",v:"对自己【能否完成某一行为的主观判断】（「我能行」）；影响任务选择、努力与坚持性、思维模式和情绪反应。"},
+{k:"韦纳归因理论",v:"能力＝【内部、稳定、不可控】；努力＝【内部、不稳定、可控】；任务难度＝外部、稳定；运气＝外部、不稳定；引导学生归因于【努力】最有利于激发后续动机。"}
+]},
+{t:"第十二章 课堂教学心理",ps:[
+{k:"课堂心理气氛三类型",v:"【积极型】（最理想）、消极型、对抗紧张型；【民主型】领导易形成积极型气氛，专制型易致消极或对抗。"},
+{k:"课堂管理的核心目标",v:"保障学生学习顺利进行、【培养自律能力】、优化课堂心理气氛——纪律只是手段之一而非全部。"},
+{k:"高校高效教学模式",v:"【启发式、探究式、合作式】教学，突出学生主体地位；单向灌输不属于高效教学模式。"},
+{k:"有效教学的特征",v:"目标明确、内容科学、方法适宜、互动充分、效果显著——【不是讲得越多、越难越有效】。"}
+]}
+]},
+
+{id:"jy",name:"教育学",full:"高等教育学",chapters:[
+{t:"第一章·第一节 高等教育的历史演进",ps:[
+{k:"三种历史形态",v:"古代【高深学问教育】→中世纪至19世纪【大学教育】→20世纪至今【中学后教育（第三级教育）】。"},
+{k:"中世纪大学的起源",v:"universitas 本意为【共同体】；组织形式来自城市和【行会】，最初即学生行会与教师行会。"},
+{k:"早期中世纪大学的自治权利",v:"自由讲学游学、【自设法庭】的审理裁判权、赋税关税兵役豁免权（全国统一教学大纲是现代国家行为，当时并不存在）。"},
+{k:"三所著名中世纪大学",v:"波伦亚大学——【法学】（罗马法与教会法，培养法官律师）；萨莱诺大学——【医学】；巴黎大学——【神学】。"},
+{k:"巴黎大学的四学院",v:"文学院为【低级学院】（相当于本科学院，授学士学位）；神、法、医为【高级学院】，进行专业教育，授硕士或博士学位。"},
+{k:"柏林大学",v:"【1809—1810】年由【洪堡】创办，确立【「教学与研究统一」（通过研究进行教学）】原则；发展科学成为高校【第二职能】，世界科学中心由此转移到德国。"},
+{k:"美国研究型大学",v:"【约翰·霍普金斯大学】全面引进德国做法，强调纯粹科学研究；哈佛、耶鲁属殖民地学院演化而来的传统大学。"},
+{k:"中国近代高等教育",v:"【京师大学堂】（1898，北大前身，师范馆是北师大前身）；【京师同文馆】（1862）是我国最早采用【班级授课制】的学校；蔡元培借鉴【德国模式】改革北大。"}
+]},
+{t:"第一章·第二节 高等学校的职能",ps:[
+{k:"三大职能的产生顺序",v:"培养人才（中世纪大学）→【发展科学】（1810年柏林大学）→【直接为社会服务】（1862年《莫雷尔法案》及威斯康星思想），依次产生、发展并存。"},
+{k:"《莫雷尔法案》（1862）",v:"引导大学与农工产业结合，催生【赠地学院】。"},
+{k:"威斯康星思想",v:"范海斯主张【为全州服务】、把知识传授给广大民众（建立推广教学中心）；1912年麦卡锡著《威斯康星理念》宣扬此办学理念。"},
+{k:"社会服务职能的性质",v:"在教学、科研职能基础上派生、延伸出来，故称【派生职能／延伸职能】。"},
+{k:"纽曼的大学观",v:"大学的唯一职能是【教学】，「发现和教学是两种迥然不同的职能」——今天仍被用来反思「重科研轻教学」。"},
+{k:"康奈尔与威斯康星",v:"康奈尔大学追求课程的【普适性】；同期威斯康星大学以提高本州【农业和工业生产效率】为办学指导思想。"}
+]},
+{t:"第一章·第三节 高等教育目的与通识教育 ★重点",hot:1,ps:[
+{k:"个人本位论代表人物",v:"【卢梭、洛克、裴斯泰洛齐、福禄倍尔】。"},
+{k:"社会本位论代表人物",v:"【孔德、涂尔干、赫尔巴特】（源头可追溯至柏拉图）；盛行于【19世纪下半叶】，主张教育首要目的在于使个体【社会化】、为社会服务。"},
+{k:"通识教育的四种能力",v:"【有效思考、清晰沟通思想、作出明确判断、辨识普遍性价值】；通识课程含人文科学、社会科学、自然科学三大领域。"},
+{k:"赫钦斯的名著课程",v:"在芝加哥大学推行【名著课程（巨著课程）】，通过研习经典实现通识教育，是【永恒主义】课程观的代表。"},
+{k:"ISCED 分类（5A／5B／6）",v:"第一阶段（序数5）＝专科、本科、硕士：【5A理论型】（5A1为研究做准备、5A2为高科技专业教育）、【5B实用技术型】；第二阶段（序数6）相当于【博士生教育】。"},
+{k:"学术型与职业型的关系",v:"只是【类型不同、无优劣之分】；我国「重学轻术」传统曾把类型差别异化为【学历层次高低】的差异——这是需要纠正的。"}
+]},
+{t:"第二章·第一节 大学精神文化",ps:[
+{k:"广义文化的三层面",v:"【精神文化、制度文化、器物文化】；狭义文化指一定社会群体习得且共有的观念和行为，大学文化即由此界定。"},
+{k:"价值层面与实践层面",v:"大学精神、理念、校训属【价值层面】（申明价值诉求）；校风、学风、教风、管理作风属【实践层面】（指导如何践行）；【校训】是大学精神文化最显性的形式。"},
+{k:"大学精神与大学理念",v:"【精神源于理念、理念基于精神】——理念积极引领大学发展时，会积淀为大学精神。"},
+{k:"校训的形式化与雷同化",v:"形式化：某校【85%】在校生、【72%】教师不知或记不全校训；雷同化：256所大学中【192所】为「四词八字」口号式，【8所】校训完全相同。"},
+{k:"阿什比论大学",v:"大学是【「遗传与环境的产物」】——遗传即优秀的文化传统（继承的发展），环境即与时俱进（创新的发展）；起决定作用的是高校有意识的【文化自觉】。"},
+{k:"兼容的四个层次",v:"【共存→认同→互补→融合】；融合是「和而不同」的学术生态，【不等于同化】（一种文化否定另一种文化）。"},
+{k:"特色的形成路径",v:"办学初期只能提【特色目标】→经长期自觉追求形成真正的【大学特色】→最终获得公认度和影响力，成为【大学品牌】。"},
+{k:"价值理念与校风的对应",v:"北大「兼容并包」→民主自由；清华「厚德载物」→严谨认真；南开「允公允能」→开拓活泼。"}
+]},
+{t:"第三章·第四节 高校教师的专业发展与评价 ★重点",hot:1,ps:[
+{k:"福勒：教师关注四阶段",v:"教学前关注（职前）→【早期生存关注】（实习／初任）→教学情境关注（教学表现）→【关注学生】（真正关怀学生）。"},
+{k:"叶澜：教师发展五阶段",v:"非关注→虚拟关注→【生存关注】（初任教师，实现角色转换，专业发展的关键期）→任务关注→自我更新关注。"},
+{k:"伯顿：教师发展三阶段",v:"【求生存阶段（第1年）→调整阶段（第2—4年，变得开放、较能关心学生）→成熟阶段（第5年及以上，不断尝试新方法）】。"},
+{k:"费斯勒：教师职业生涯八阶段",v:"职前教育→引导→能力建立→热情高涨的专业成长→【生涯挫折（倦怠可能产生）】→稳定和停滞（「做一天和尚撞一天钟」）→生涯低落→生涯退出。"},
+{k:"教师评价的三类指标",v:"【效能指标（核心和根本，投入—产出）】、职责指标（基本要求）、资格素质指标（前提保证），三者相互影响、相互关联。"},
+{k:"教学与科研的双重关系",v:"【源流关系】——没有科研就缺乏深刻且与时俱进的教学（科研为源）；【本末关系】——教学为本、科研为辅；不能让源流关系颠倒了本末关系。"},
+{k:"美国学术晋升与「非升即走」",v:"助理教授（合同制）→副教授、教授（终身制）；从助理教授到副教授一般须在【6年内】完成，否则须离校，即【「非升即走」】。"},
+{k:"高校教师聘任制四大动向",v:"【评聘统筹、非升即走、末位淘汰、终身聘任后评审（Post-Tenure Review）】，共同构成滚动式竞争机制。"},
+{k:"学术晋升结构的三种类型",v:"单一型（德、瑞典、西班牙、意大利，全国一个系列）→【陡峭型】晋升程序；交叉型（法国，高校与科研机构职位可流通）；多重型（美国，各大学标准各异）→相对【平缓】。"},
+{k:"我国教师职务制度",v:"《高等教育法》第47条：设【助教、讲师、副教授、教授】；制度变迁方向＝【淡化评审、强化聘任】，落实用人自主权、建立竞争激励机制。"}
+]},
+{t:"第五章·第一节 高校课程理论 ★重点",hot:1,ps:[
+{k:"显性课程 vs 隐性课程",v:"显性课程通过【课堂知识传递】获得学术性知识；隐性课程通过学校组织、文化、师生互动【潜移默化】，学生大多无意接受；区别在【结果、计划、环境】三方面（与教师职称无关）。"},
+{k:"通识教育的三重使命",v:"作为专业教育的【补充与纠正】（并列关系）、【延伸与深化】（专业教育为上位）、【灵魂与统帅】（专业教育为下位），两者相辅相成。"},
+{k:"美国高校的专业形成路径",v:"社会新职业需求首先以【课程（选修课）】形式回应，待职业形成规模、条件成熟才正式设置专业；本科阶段专业意识淡薄，以【「主修领域」】代替专业。"},
+{k:"选修课比例的上升趋势",v:"MIT化工专业选修课比例从1951年的9%升至1985年的【61%】；法国本科课程中选修课比例达【40%—60%】，且任选课比重不断增大。"},
+{k:"科学教育思想",v:"培根（16世纪末17世纪初，英国）提出【「知识就是力量」】；19世纪科学教育思想代表＝【斯宾塞、赫胥黎】，抨击古典主义教育，主张科学知识最有价值。"}
+]},
+{t:"第五章·第二节 课程编制",ps:[
+{k:"课程编制的三个层次",v:"【教学计划→教学大纲→教科书】，现多称【培养方案→课程标准→教材（课程资源）】，由抽象到具体层层落实。"},
+{k:"学分制课程结构（北大案例）",v:"总学分【160】左右；普通教育：基础教学：专业教学≈【1:1.5:1】；每板块只规定【学分】、不限课程。"}
+]},
+{t:"第六章·第一节 高校教学的概念",ps:[
+{k:"「教」与「教学」的字源",v:"东汉【许慎《说文解字》】释「教」为「上所施，下所效也」；【《学记》】最早出现「教学」二字，【「教学相长」】被视为我国传统教学思想的精髓。"},
+{k:"班级授课制",v:"捷克教育家【夸美纽斯】在《大教学论》中论证；我国采用班级授课制始于【1862年京师同文馆】。"},
+{k:"高校教学内容的特点",v:"【深】（高度理论化的高深知识）、【新】（吸收学科前沿成果）、【变】（内容的不确定性）；【专业性】是高等教育存在的基础，高校一切活动围绕专业展开。"},
+{k:"大教学小课程 vs 大课程小教学",v:"苏联及我国受其影响＝【大教学小课程】（课程作为内容置于教学原理中）；美国＝【大课程小教学】（教学是课程的实施途径）。"},
+{k:"教学的中心地位",v:"1998年教育部文件明确「教学工作是学校【经常性的中心工作】」；《高等教育法》第31条：高校应【以培养人才为中心】开展教学、科研和社会服务。"},
+{k:"苏格拉底方法（产婆术）",v:"【讽刺】（诘问使对方自知无知）→【定义】（反复诘难引出明确概念）→【助产术】（引导学生自己得出结论）；后世启发式教学由此发展而来。"},
+{k:"教学永远具有教育性",v:"德国教育家【赫尔巴特】提出「没有无教育性的教学」；苏联达尼洛夫亦持此观点。"}
+]},
+{t:"第六章·第三节 高校教学方法 ★重点",hot:1,ps:[
+{k:"教学方法的三层次",v:"【原理性】（启发式、注入式、发现式——无固定程序，起指导作用）、【技术性】（讲授、谈话、演示、参观、实验、练习、讨论——起中介作用）、【操作性】（听说法、写生法等特定课程独有——可操作）。"},
+{k:"巴班斯基三大类分类",v:"①【组织和实施学习认识活动】的方法（口述法、直观法、归纳法、探索法等）②【激发和形成动机】的方法 ③【检查与自我检查】的方法。"},
+{k:"潘懋元五分类",v:"【课堂教学方法（讲授、讨论、实验）、现场教学方法（参观、调查、实习）、自学与自学指导方法、科研训练方法（科研活动、论文与设计）、学业检查与评定方法】。"},
+{k:"讲授法的地位",v:"「减少讲授、多用新方法效果就好」是【简单而荒唐】的想法；【优质讲授是其他方法成功的前提】；讲授要注意目的性、科学组织内容、语言清晰精练生动、寓启发于讲授之中。"},
+{k:"案例教学法",v:"由【哈佛商学院于20世纪20年代】倡导；基本过程＝【准备→实施→总结】三阶段；【课堂讨论是中心环节】；教师是「导演」、学生是「演员」。"},
+{k:"小组教学的适用阶段",v:"适用于教师主导的【导入阶段之后】、由学生主导的【深化阶段】；经准备也可用于开始或尾声，但不具一般性。"},
+{k:"选择教学方法的依据",v:"①教学【目的和任务】②教学【内容】③【师生条件与特点】④教学方法的【功能和类型】⑤【教学时间与教学条件】——要综合考虑，不能仅凭好恶或经验。"}
+]}
+]}
+];
+
+/* ================= 状态 ================= */
+var KEY="liangxue_kaodian_v1";
+var store={};
+try{store=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){store={}}
+function saveStore(){localStorage.setItem(KEY,JSON.stringify(store))}
+function mkey(sub,ci,pi){return sub+"-"+ci+"-"+pi}
+
+var cur=0;          /* 当前科目下标 */
+var filter="all";   /* all | todo | done */
+
+/* ================= 渲染 ================= */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+/* 把【】标记转成 .kw 节点 */
+function fmt(s){
+  return esc(s).replace(/【(.*?)】/g,function(m,t){return '<span class="kw">'+t+'</span>'});
+}
+function counts(si){
+  var d=0,total=0;
+  var s=SUB[si];
+  for(var ci=0;ci<s.chapters.length;ci++){
+    for(var pi=0;pi<s.chapters[ci].ps.length;pi++){
+      total++;
+      if(store[mkey(s.id,ci,pi)])d++;
+    }
+  }
+  return {done:d,total:total};
+}
+function renderTabs(){
+  var h="";
+  for(var i=0;i<SUB.length;i++){
+    var c=counts(i);
+    h+='<div class="tab'+(i===cur?" on":"")+'" data-i="'+i+'">'+SUB[i].full
+      +'<span class="n">'+c.done+'/'+c.total+'</span></div>';
+  }
+  document.getElementById("tabs").innerHTML=h;
+}
+function renderStat(){
+  var c=counts(cur);
+  document.getElementById("prog").innerHTML='已掌握 <b>'+c.done+'</b> / '+c.total+' 条';
+  document.getElementById("pfill").style.width=(c.total?Math.round(c.done*100/c.total):0)+"%";
+}
+function renderPanel(){
+  var s=SUB[cur],h="",shown=0;
+  for(var ci=0;ci<s.chapters.length;ci++){
+    var ch=s.chapters[ci];
+    var cards="",d=0;
+    for(var pi=0;pi<ch.ps.length;pi++){
+      var p=ch.ps[pi];
+      var done=!!store[mkey(s.id,ci,pi)];
+      if(done)d++;
+      if(filter==="todo"&&done)continue;
+      if(filter==="done"&&!done)continue;
+      cards+='<div class="pt'+(done?" done":"")+'" data-k="'+mkey(s.id,ci,pi)+'">'
+        +'<span class="dot" title="打卡已掌握"></span>'
+        +'<div class="bd"><div class="k">'+esc(p.k)+'</div><div class="v">'+fmt(p.v)+'</div></div>'
+        +'</div>';
+      shown++;
+    }
+    if(!cards)continue;
+    h+='<div class="chap"><h2>'+esc(ch.t)+'</h2><span class="cp">已掌握 <b>'+d+'</b>/'+ch.ps.length+'</span></div>'+cards;
+  }
+  if(!shown)h='<div class="empty">这个筛选下没有考点了——很好，去另一科看看？</div>';
+  document.getElementById("panel").innerHTML=h;
+}
+function render(){renderTabs();renderStat();renderPanel()}
+
+/* ================= 交互 ================= */
+document.getElementById("tabs").addEventListener("click",function(e){
+  var t=e.target.closest(".tab");
+  if(!t)return;
+  cur=+t.dataset.i;
+  render();
+  window.scrollTo({top:0});
+});
+
+/* 打卡 / 墨块点击（原地更新，不重绘、不跳滚动） */
+document.getElementById("panel").addEventListener("click",function(e){
+  var kw=e.target.closest(".kw");
+  if(kw){kw.classList.toggle("show");return}
+  var dot=e.target.closest(".dot");
+  if(!dot)return;
+  var card=dot.closest(".pt");
+  var k=card.dataset.k;
+  if(store[k])delete store[k];else store[k]=1;
+  saveStore();
+  card.classList.toggle("done");
+  renderTabs();renderStat();
+  /* 更新所属章节的小计数 */
+  var chEl=card.previousElementSibling;
+  while(chEl&&!chEl.classList.contains("chap"))chEl=chEl.previousElementSibling;
+  if(chEl){
+    var ci=+k.split("-")[1];
+    var ch=SUB[cur].chapters[ci];
+    var dd=0;
+    for(var pi=0;pi<ch.ps.length;pi++)if(store[mkey(SUB[cur].id,ci,pi)])dd++;
+    var cp=chEl.querySelector(".cp");
+    cp.innerHTML='已掌握 <b>'+dd+'</b>/'+ch.ps.length;
+  }
+});
+
+/* 背诵模式：纯 CSS 切换，不打断当前滚动 */
+document.getElementById("recite").addEventListener("change",function(){
+  document.body.classList.toggle("recite",this.checked);
+});
+
+/* 筛选 */
+document.querySelectorAll(".chip.f").forEach(function(c){
+  c.addEventListener("click",function(){
+    document.querySelectorAll(".chip.f").forEach(function(x){x.classList.remove("on")});
+    c.classList.add("on");
+    filter=c.dataset.f;
+    renderPanel();
+  });
+});
+
+document.getElementById("reset").addEventListener("click",function(){
+  var s=SUB[cur];
+  var c=counts(cur);
+  if(!c.done)return;
+  if(!confirm("确定清除《"+s.full+"》的全部掌握记录吗？"))return;
+  var prefix=s.id+"-";
+  for(var k in store)if(k.indexOf(prefix)===0)delete store[k];
+  saveStore();
+  render();
+});
+
+/* ================= 启动 ================= */
+(function(){
+  var total=0;
+  SUB.forEach(function(s){s.chapters.forEach(function(ch){total+=ch.ps.length})});
+  document.getElementById("totalN").textContent=total;
+  render();
+})();
+</script>
+</body>
+</html>
