@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等教育心理学 · 广东岗前培训刷题练习</title>
+<style>
+  :root{
+    --ink:#1c3151;          /* 藏青 */
+    --ink-2:#33517c;
+    --paper:#f6f1e4;        /* 米纸 */
+    --card:#fffdf6;
+    --red:#b23a2f;          /* 朱砂 */
+    --red-bg:#faecea;
+    --green:#2f7d5b;        /* 竹青 */
+    --green-bg:#eef6f0;
+    --gold:#b98a2f;
+    --muted:#8a7f66;
+    --line:#d9cfb4;
+    --serif:"Songti SC","STZhongsong","华文中宋","SimSun","宋体",serif;
+    --kai:"KaiTi","STKaiti","楷体","BKaiKai",serif;
+    --sans:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(rgba(28,49,81,.05) 1px, transparent 1.4px),
+      linear-gradient(180deg,#f8f4e9 0%, var(--paper) 40%, #f3ecdb 100%);
+    background-size:22px 22px, auto;
+    min-height:100vh;
+    line-height:1.75;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 16px}
+
+  /* ===== 卷头 ===== */
+  header{padding:34px 0 10px;text-align:center;position:relative}
+  .paper-head{
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:5px;
+    background:var(--card);
+    padding:26px 20px 22px;
+    position:relative;
+    box-shadow:0 10px 28px rgba(28,49,81,.10);
+  }
+  .paper-head .sup{font-family:var(--serif);letter-spacing:.5em;color:var(--ink-2);font-size:13px;text-indent:.5em;margin-bottom:8px}
+  .paper-head h1{font-family:var(--serif);font-size:clamp(24px,4.6vw,38px);letter-spacing:.14em;color:var(--ink);font-weight:700}
+  .paper-head h1 .dot{color:var(--red);margin:0 .08em}
+  .paper-head .sub{margin-top:10px;font-size:13px;color:var(--muted);font-family:var(--kai)}
+  .paper-head .sub b{color:var(--ink-2)}
+  .seal{
+    position:absolute;right:14px;bottom:-16px;
+    width:62px;height:62px;border:3px solid var(--red);border-radius:6px;
+    color:var(--red);font-family:var(--kai);font-weight:700;
+    display:grid;grid-template-columns:1fr 1fr;place-items:center;
+    font-size:22px;line-height:1;transform:rotate(7deg);
+    background:rgba(255,253,246,.92);
+    box-shadow:inset 0 0 0 1px rgba(178,58,47,.35);
+    user-select:none;
+  }
+  .seal span{padding:2px}
+
+  /* ===== 导航 ===== */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,241,228,.94);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+    margin-top:26px;
+  }
+  .tabs{max-width:940px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;padding:13px 18px 11px;cursor:pointer;
+    font-family:var(--serif);font-size:16px;letter-spacing:.1em;
+    color:var(--muted);border-bottom:3px solid transparent;position:relative;
+    transition:color .18s;user-select:none;white-space:nowrap;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--red);font-weight:700}
+  .tab.on::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-2px;height:3px;background:var(--red);
+  }
+  .tab .n{
+    display:inline-block;min-width:20px;padding:0 5px;margin-left:6px;
+    font-family:var(--sans);font-size:11px;line-height:16px;border-radius:8px;
+    background:#e9e2cd;color:var(--muted);vertical-align:2px;
+  }
+  .tab.on .n{background:var(--red);color:#fff}
+
+  /* ===== 统计条 ===== */
+  .statbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    margin:18px 0 4px;font-size:13px;color:var(--ink-2);
+  }
+  .statbar .chip{background:var(--card);border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+  .statbar .chip b{font-family:var(--serif);font-size:15px}
+  .statbar .sp{flex:1}
+  .btn{
+    font-family:var(--serif);font-size:13px;letter-spacing:.08em;cursor:pointer;
+    border:1px solid var(--ink-2);background:var(--card);color:var(--ink);
+    padding:5px 14px;border-radius:4px;transition:all .15s;user-select:none;
+  }
+  .btn:hover{background:var(--ink);color:#f6f1e4}
+  .btn.warn{border-color:var(--red);color:var(--red)}
+  .btn.warn:hover{background:var(--red);color:#fff}
+  .btn.mini{padding:2px 10px;font-size:12px}
+  .toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;font-size:13px;color:var(--ink-2)}
+  .toggle input{accent-color:var(--red);width:15px;height:15px;cursor:pointer}
+
+  /* ===== 题卡 ===== */
+  .qcard{
+    background:var(--card);border:1px solid var(--line);
+    padding:20px 22px 18px;margin:16px 0;position:relative;
+    box-shadow:0 3px 10px rgba(28,49,81,.05);
+  }
+  .qcard::before{
+    content:"";position:absolute;top:0;left:0;width:100%;height:4px;
+    background:linear-gradient(90deg,var(--ink) 0 34%,var(--red) 34% 36%,transparent 36%);
+  }
+  .qhead{display:flex;gap:10px;align-items:baseline;margin-bottom:10px}
+  .qno{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--red);white-space:nowrap}
+  .qch{
+    font-size:11px;font-family:var(--kai);color:var(--ink-2);
+    border:1px solid var(--line);padding:1px 8px;border-radius:999px;background:#f7f2e2;white-space:nowrap;
+  }
+  .qtext{font-size:15.5px;font-weight:600;font-family:var(--serif);letter-spacing:.02em}
+
+  .opts{margin-top:12px;display:grid;gap:8px}
+  .opt{
+    display:flex;gap:12px;align-items:flex-start;padding:9px 12px;
+    border:1px solid var(--line);border-radius:6px;background:#fffef9;
+    cursor:pointer;transition:border-color .15s, background .15s;
+  }
+  .opt:hover{border-color:var(--ink-2);background:#fdf9ec}
+  .opt .L{
+    flex:0 0 24px;height:24px;border-radius:50%;border:1.5px solid var(--ink-2);
+    display:grid;place-items:center;font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink-2);
+    margin-top:2px;
+  }
+  .opt .T{font-size:14.5px}
+  .locked .opt{cursor:default}
+  .locked .opt:hover{border-color:var(--line);background:#fffef9}
+  .opt.pick{border-color:var(--red);background:var(--red-bg)}
+  .opt.pick .L{background:var(--red);border-color:var(--red);color:#fff}
+  .opt.right{border-color:var(--green);background:var(--green-bg)}
+  .opt.right .L{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.dim{opacity:.55}
+  .locked .opt.right:hover{border-color:var(--green)}
+
+  .fb{margin-top:12px;padding:10px 14px;border-radius:6px;font-size:14px;display:flex;gap:8px;align-items:flex-start}
+  .fb.ok{background:var(--green-bg);border:1px solid #cfe3d6;color:var(--green)}
+  .fb.no{background:var(--red-bg);border:1px solid #e8c9c4;color:var(--red)}
+  .fb .tag{font-family:var(--serif);font-weight:700;white-space:nowrap}
+
+  .exp{
+    margin-top:10px;border-left:3px solid var(--gold);
+    background:#faf6e8;padding:10px 14px;font-size:13.5px;color:#6b5d33;
+  }
+  .exp .lb{font-family:var(--kai);font-weight:700;color:var(--gold);margin-right:6px}
+
+  /* 判断题按钮 */
+  .jbtns{display:flex;gap:14px;margin-top:12px}
+  .jbtn{
+    flex:1;max-width:200px;padding:10px 0;text-align:center;cursor:pointer;
+    font-family:var(--kai);font-size:20px;font-weight:700;letter-spacing:.3em;text-indent:.3em;
+    border:1.5px solid var(--ink-2);border-radius:6px;color:var(--ink-2);background:#fffef9;
+    transition:all .15s;user-select:none;
+  }
+  .jbtn:hover{background:#fdf9ec;border-color:var(--ink)}
+  .locked .jbtn{cursor:default}
+  .jbtn.pick{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+  .jbtn.right{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+
+  /* 主观题 */
+  .mat{
+    margin-top:12px;background:#fbf7ec;border:1px dashed var(--line);
+    padding:14px 16px;font-size:14px;color:#4a4433;
+  }
+  .mat .lb{font-family:var(--kai);font-weight:700;color:var(--muted);margin-right:6px}
+  .qs{margin-top:10px;font-size:14.5px;font-weight:600;font-family:var(--serif)}
+  .sheet{
+    width:100%;margin-top:12px;border:1px solid var(--line);background:#fff;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,#efe7d0 32px);
+    line-height:32px;padding:0 12px;font-family:var(--sans);font-size:14px;color:var(--ink);
+    min-height:132px;resize:vertical;outline:none;
+  }
+  .sheet:focus{border-color:var(--ink-2)}
+  .refbtns{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .ref{
+    margin-top:12px;border:1px solid #cfe3d6;background:var(--green-bg);
+    border-radius:6px;padding:14px 16px;font-size:14px;
+  }
+  .ref .lb{font-family:var(--kai);font-weight:700;color:var(--green)}
+  .ref ul{margin:8px 0 4px 0;padding-left:20px}
+  .ref li{margin:4px 0}
+  .ref .demo{margin-top:8px;padding-top:8px;border-top:1px dashed #bcd6c8;font-size:13.5px;color:#3f6653}
+  .selfmark{margin-top:10px;display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}
+  .selfmark .btn{font-size:12.5px}
+  .selfmark .btn.did{background:var(--green);border-color:var(--green);color:#fff}
+  .selfmark .btn.again{background:var(--red);border-color:var(--red);color:#fff}
+
+  .redo{margin-top:10px}
+  .redo .btn{font-size:12px}
+
+  /* 首页考情 */
+  .hero{margin-top:22px}
+  .note{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);
+    padding:16px 20px;margin:14px 0;font-size:14px;
+  }
+  .note h3{font-family:var(--serif);font-size:16px;margin-bottom:8px;letter-spacing:.06em}
+  .note h3 .no{
+    display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;
+    background:var(--red);color:#fff;font-size:12px;font-family:var(--sans);margin-right:8px;vertical-align:-3px;
+  }
+  .note p,.note li{font-size:14px;color:#454f60}
+  .note ul{padding-left:20px;margin-top:6px}
+  .note li{margin:4px 0}
+  .note b{color:var(--ink)}
+  .note .k{color:var(--red);font-weight:700}
+  .note table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px}
+  .note th,.note td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+  .note th{background:#f3ecd9;font-family:var(--serif)}
+  .src{font-size:12px;color:var(--muted);font-family:var(--kai);margin-top:10px}
+
+  .done-tip{font-family:var(--kai);color:var(--green);font-size:14px;margin-top:12px;display:flex;gap:8px;align-items:center}
+  .summary{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px;
+  }
+  .scard{background:var(--card);border:1px solid var(--line);padding:14px 16px;text-align:center}
+  .scard .t{font-family:var(--kai);font-size:13px;color:var(--muted)}
+  .scard .v{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);margin-top:4px}
+  .scard .v small{font-size:13px;color:var(--muted);font-weight:400}
+  .scard.red .v{color:var(--red)}
+
+  footer{margin-top:40px;text-align:center;font-family:var(--kai);font-size:13px;color:var(--muted)}
+  footer .line{width:120px;height:1px;background:var(--line);margin:12px auto}
+
+  @media (max-width:600px){
+    .qcard{padding:16px 14px}
+    .paper-head{padding:22px 14px 20px}
+    .seal{width:50px;height:50px;font-size:17px;right:8px;bottom:-14px}
+    .jbtns{gap:10px}
+    .statbar .chip{font-size:12px;padding:3px 10px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="paper-head">
+      <div class="sup">广东省高校教师岗前培训</div>
+      <h1>高等教育心理学<span class="dot">·</span>刷题练习卷</h1>
+      <div class="sub">教材依据：张积家主编《高等教育心理学》（第二版）· 高等教育出版社<br>题型：<b>单选 · 判断 · 举例说明 · 案例分析</b>　全卷共 <b id="totalN">--</b> 题</div>
+      <div class="seal"><span>必</span><span>过</span><span>顺</span><span>利</span></div>
+    </div>
+  </div>
+</header>
+
+<nav><div class="tabs" id="tabs"></div></nav>
+
+<main class="wrap">
+  <div class="statbar" id="statbar"></div>
+  <div id="panel"></div>
+</main>
+
+<footer>
+  <div class="line"></div>
+  岗前培训「两学」闭卷 · 认真作答 · 逢考必过<br>
+  <span style="font-size:11px">本页为自编练习卷，依据复习大纲与公开题库常考点命制 · 生成于 2026-09</span>
+</footer>
+
+<script>
+/* ================= 题库数据 ================= */
+var SINGLE=[
+{ch:"第一章 概论",q:"下列选项中，不属于高等教育特点的是（　）。",o:["专业性","高深性","基础性","职业性"],a:2,e:"高等教育的特点包括专业性、高深性、创新性和职业性；「基础性」是基础教育的特征。"},
+{ch:"第一章 概论",q:"高等教育心理学的研究对象是（　）。",o:["高校教师的心理现象","大学生的心理发展规律","高校情境中学生的学与教师的教的基本心理规律","高等教育教学过程本身的规律"],a:2,e:"高等教育心理学研究的是高等教育情境中「教与学」双方的心理规律，既包括学生的学，也包括教师的教，不能只取一方。"},
+{ch:"第一章 概论",q:"研究者在自然的教育情境中，有目的、有计划地通过感官或仪器记录学生的行为表现，从而研究其心理规律，这种方法是（　）。",o:["实验法","观察法","调查法","个案法"],a:1,e:"观察法是在自然条件下有目的、有计划地记录被试行为，是最基本、最常用的方法；实验法需控制和改变条件，调查法借助问卷、访谈等间接收集资料。"},
+{ch:"第一章 概论",q:"某研究者对一位教学困难的新教师进行了为期三年的深入跟踪研究，全面分析其成长过程。这种研究方法是（　）。",o:["个案法","观察法","实验法","调查法"],a:0,e:"个案法是对单一对象（个人或少数个体）进行深入、详尽、长期的研究，常用于教师成长、问题学生等研究。"},
+{ch:"第二章 教师心理",q:"福勒和布朗提出的教师成长三阶段，正确的发展顺序是（　）。",o:["关注学生→关注生存→关注情境","关注生存→关注情境→关注学生","关注情境→关注生存→关注学生","关注生存→关注学生→关注情境"],a:1,e:"教师专业成长依次经历关注生存阶段（人际关系与适应）、关注情境阶段（成绩、进度、备课质量）、关注学生阶段（个体差异、因材施教）。能否关注学生是教师成熟的重要标志。"},
+{ch:"第二章 教师心理",q:"新教师张老师最关心的问题是“学生喜不喜欢我”“领导和同事怎么看我”。按照教师成长阶段理论，张老师处于（　）。",o:["关注学生阶段","关注情境阶段","关注生存阶段","关注自我阶段"],a:2,e:"关注自身生存适应、人际关系和被接纳程度，是关注生存阶段的典型表现。"},
+{ch:"第二章 教师心理",q:"教师职业倦怠三个维度中，最核心、最具指标性的维度是（　）。",o:["去个性化","情绪耗竭","低个人成就感","角色超载"],a:1,e:"情绪耗竭指情绪资源被耗尽、感到疲惫不堪，是职业倦怠的核心维度，并伴随去个性化（冷漠待人）和低个人成就感。"},
+{ch:"第二章 教师心理",q:"李老师近来越来越对学生冷漠、疏远，把学生“当物一样”对待，对学生问题漠不关心。这属于职业倦怠中的（　）。",o:["情绪耗竭","去个性化","低个人成就感","角色冲突"],a:1,e:"去个性化表现为以消极、否定、麻木不仁的态度对待服务对象（学生），是情绪耗竭之后常出现的维度。"},
+{ch:"第三章 心理特点",q:"皮亚杰认知发展四阶段的正确顺序是（　）。",o:["感知运动阶段→前运算阶段→具体运算阶段→形式运算阶段","前运算阶段→感知运动阶段→具体运算阶段→形式运算阶段","感知运动阶段→具体运算阶段→前运算阶段→形式运算阶段","前运算阶段→具体运算阶段→感知运动阶段→形式运算阶段"],a:0,e:"皮亚杰四阶段依次为感知运动（0-2岁）、前运算（2-7岁）、具体运算（7-11、12岁）、形式运算（11、12岁以后），顺序不可颠倒、不可跨越。"},
+{ch:"第三章 心理特点",q:"大学生的认知发展一般处于皮亚杰所说的（　）。",o:["具体运算阶段","形式运算阶段","前运算阶段","感知运动阶段"],a:1,e:"形式运算阶段以抽象逻辑思维和假设演绎推理为特征；大学生抽象逻辑思维趋于成熟并占主导地位。"},
+{ch:"第三章 心理特点",q:"埃里克森认为，成年早期（约18-25岁，大学生所处时期）面临的发展危机是（　）。",o:["勤奋感对自卑感","自我同一性对角色混乱","亲密感对孤独感","繁殖感对停滞感"],a:2,e:"青年期（12-18岁）的核心危机是自我同一性对角色混乱；成年早期（18-25岁）的任务是建立亲密感、避免孤独感。大学生仍在继续巩固自我同一性。"},
+{ch:"第三章 心理特点",q:"维果茨基所说的“最近发展区”是指（　）。",o:["个体当前已经达到的发展水平","个体未来可能达到的最高发展水平","个体现有水平与在成人指导下可能达到的较高水平之间的差距","个体天生的遗传潜能"],a:2,e:"最近发展区是“现有发展水平”与“潜在发展水平”之间的区域，即“已经成熟”与“尚未成熟但可达成”的差距，教学应立足这一区域。"},
+{ch:"第三章 心理特点",q:"“教学应走在发展的前面。”依据这一主张，教师在教学中应当（　）。",o:["只教学生已经会的内容","把教学难度定得远远超过学生水平","立足最近发展区，给学生适度的挑战和支架","等学生完全成熟之后再进行教学"],a:2,e:"维果茨基主张教学引领发展：教学内容应略高于现有水平、落在最近发展区内，通过支架式帮助使学生“跳一跳，够得着”。"},
+{ch:"第三章 心理特点",q:"2岁左右是口语发展的关键期，错过了语言刺激会导致发展受损。这说明个体心理发展具有（　）。",o:["顺序性","阶段性","不平衡性","差异性"],a:2,e:"同一心理机能在不同时期发展速度和成熟水平不同（存在关键期），体现的是不平衡性；差异性指个体之间各不相同。"},
+{ch:"第三章 心理特点",q:"“有的学生擅长形象思维，有的学生擅长抽象逻辑思维”，教学中应因材施教。这体现心理发展的（　）。",o:["顺序性","阶段性","不平衡性","差异性"],a:3,e:"个体之间在能力、性格、思维风格等方面存在差异，属于个别差异性，要求教育因材施教。"},
+{ch:"第三章 心理特点",q:"大学生不满足于教材和教师的现成结论，喜欢独立思考、大胆质疑、与人争辩。这反映了大学生（　）。",o:["思维的独立性和批判性增强","思维的依赖性","思维的直观性","思维的表面性"],a:0,e:"大学生抽象逻辑思维成熟，思维独立性、批判性明显增强，不再盲从权威，是重要的大学生认知特点。"},
+{ch:"第四章 学习理论",q:"学生连续一周按时交作业后，教师撤销了对他的“课后留堂”处理，此后该生按时交作业的次数明显增多。这一做法属于（　）。",o:["正强化","负强化","惩罚","消退"],a:1,e:"负强化是撤销（排除）厌恶刺激从而使行为频率增加；正强化是呈现愉快刺激；“留堂”是厌恶刺激，撤销它强化了按时交作业的行为。"},
+{ch:"第四章 学习理论",q:"学生上课频繁玩手机，教师没收其手机一周，以期减少该行为。这属于（　）。",o:["正强化","负强化","惩罚","替代强化"],a:2,e:"惩罚是呈现厌恶刺激（或撤销愉快刺激）以降低行为频率。没收手机是呈现厌恶刺激，目的是减少上课玩手机行为。"},
+{ch:"第四章 学习理论",q:"布鲁纳认为，学生学习的最好方式是（　）。",o:["接受学习","发现学习","机械学习","观察学习"],a:1,e:"布鲁纳倡导发现学习，让学生像科学家一样主动探索、发现结论，并主张掌握学科的基本结构（基本概念、原理及其关系）。"},
+{ch:"第四章 学习理论",q:"奥苏贝尔认为，有意义学习的实质是（　）。",o:["把教师讲授的内容完整记住","新知识与原有认知结构中已有的适当观念建立非人为的、实质性的联系","通过反复诵读形成刺激—反应联结","通过尝试错误逐步获得经验"],a:1,e:"有意义接受学习的实质是新旧知识之间建立「非人为的」（合乎逻辑的）和「实质性的」（非字面的）联系，而非机械记忆。"},
+{ch:"第四章 学习理论",q:"师范生通过观摩优秀教师的教学录像学会课堂提问技巧。按照班杜拉的理论，这属于（　）。",o:["强化学习","观察学习","机械学习","发现学习"],a:1,e:"观察学习（社会学习）是通过观察榜样的行为及其结果而习得新行为，不需要亲自体验强化，经历注意、保持、再现、动机四个过程。"},
+{ch:"第四章 学习理论",q:"建构主义认为，理想的学习环境包含四大要素，即（　）。",o:["教师、教材、教室、考试","情境、协作、会话、意义建构","预习、听讲、作业、复习","目标、内容、方法、评价"],a:1,e:"建构主义学习环境四要素：情境（学习应在真实情境中进行）、协作、会话（交流讨论）、意义建构（最终目标）。"},
+{ch:"第四章 学习理论",q:"罗杰斯提出的促进学习的心理气氛条件不包括（　）。",o:["真诚一致","同理心（共情）","无条件积极关注","权威与指令"],a:3,e:"人本主义心理学家罗杰斯主张教师以真诚、同理心、无条件积极关注对待学生，倡导非指导性教学，反对权威压制。"},
+{ch:"第五章 知识获得",q:"“知道北京是中国的首都”属于陈述性知识，而“会操作显微镜、会编写程序”属于（　）。",o:["陈述性知识","程序性知识","条件性知识","事实性知识"],a:1,e:"陈述性知识回答“是什么”，能被陈述；程序性知识回答“怎么做”，通过实际操作表现出来，往往“只可意会难以言传”。"},
+{ch:"第五章 知识获得",q:"学习数学有利于学习物理，学生能“举一反三、触类旁通”。这种现象是（　）。",o:["知识保持","知识迁移","知识遗忘","知识同化"],a:1,e:"一种学习对另一种学习的影响即迁移；“举一反三、闻一知十、触类旁通”都是典型的（正）迁移现象。"},
+{ch:"第六章 思维与问题解决",q:"问题解决过程的第一个阶段是（　）。",o:["提出假设","发现问题","分析问题","检验假设"],a:1,e:"问题解决依次经历：发现问题→分析问题→提出假设→检验假设。发现问题是起点，也是个体思维发展水平的重要标志。"},
+{ch:"第六章 思维与问题解决",q:"解决“把蜡烛固定在墙上”的问题时，只想到图钉盒是容器而想不到把它当烛台。这种心理障碍是（　）。",o:["定势","功能固着","负迁移","顿悟"],a:1,e:"功能固着指只看到物体的惯常功能、不能发现其新用途，是定势的特殊表现形式，阻碍问题解决。"},
+{ch:"第七章 创造性",q:"要求被试在一分钟内尽可能多地说出“砖头的用途”，测量的是创造性的（　）。",o:["流畅性","变通性","独特性","精细性"],a:0,e:"流畅性指单位时间内产生想法的数量；变通性指想法类别的多样性（跨越不同领域）；独特性指想法新颖独到、与众不同。"},
+{ch:"第八章 品德",q:"品德的心理结构中，衡量个体品德水平高低的重要标志是（　）。",o:["道德认知","道德情感","道德意志","道德行为"],a:3,e:"道德认知（认识）是品德形成的基础和核心，道德情感是动力，道德意志是精神力量，道德行为是品德形成的最终目的，是衡量品德水平的重要标志。"},
+{ch:"第八章 品德",q:"科尔伯格道德发展阶段理论中，“好孩子定向”阶段属于（　）。",o:["前习俗水平","习俗水平","后习俗水平","超习俗水平"],a:1,e:"习俗水平（第二水平）包括“好孩子定向”（寻求认可）和“维护社会秩序定向”两阶段；“服从与惩罚定向”“工具性目的定向”属前习俗水平。"},
+{ch:"第十一章 动机",q:"根据耶克斯—多德森定律，完成复杂、困难的学习任务时，最佳动机水平应（　）。",o:["偏高一些","偏低一些","中等偏高","越强越好"],a:1,e:"动机与效率呈倒U型关系，最佳动机水平随任务难度而变化：任务越难，最佳动机水平越低；任务越容易，最佳动机水平可偏高。"},
+{ch:"第十一章 动机",q:"马斯洛需要层次理论中，最高层次的需要是（　）。",o:["尊重的需要","归属与爱的需要","自我实现的需要","求知的需要"],a:2,e:"由低到高依次为：生理→安全→归属与爱→尊重→自我实现（教材另有求知、审美等层次），自我实现是最高层次的成长性需要。"},
+{ch:"第十一章 动机",q:"麦克利兰成就需要理论认为，个体追求卓越、希望把事情做得更好、争取成功的内在需要是（　）。",o:["权力需要","亲和（社交）需要","成就需要","生存需要"],a:2,e:"麦克利兰提出人有三種后天需要：成就需要（追求卓越）、权力需要（影响支配他人）、亲和需要（建立友好关系）。高成就需要者更愿意承担适度挑战性任务。"},
+{ch:"第十一章 动机",q:"班杜拉提出的“自我效能感”是指（　）。",o:["个体对成功客观概率的评估","个体对自己能否完成某一行为的主观判断","个体的自尊水平","个体的一般能力倾向"],a:1,e:"自我效能感是“我能行”的主观判断，而非能力本身；它影响任务选择、努力程度、坚持性和情绪反应（如考试焦虑）。"},
+{ch:"第十一章 动机",q:"韦纳归因理论中，“能力”属于（　）的因素。",o:["内部、稳定、不可控","内部、不稳定、可控","外部、稳定、不可控","外部、不稳定、可控"],a:0,e:"能力是内部、稳定、不可控因素；努力是内部、不稳定、可控因素；任务难度、运气是外部因素（运气不稳定，任务难度相对稳定）。"},
+{ch:"第十二章 教学心理",q:"课堂心理气氛的三种类型中，最理想的是（　）。",o:["积极型","消极型","对抗紧张型","放任型"],a:0,e:"课堂心理气氛分积极型、消极型、对抗紧张型三类；积极型课堂师生关系和谐、学生参与度高，是教学的理想状态。"},
+{ch:"第十二章 教学心理",q:"高校高效教学的常用模式不包括（　）。",o:["启发式教学","探究式教学","合作式教学","单向灌输式教学"],a:3,e:"高校高效教学模式强调启发式、探究式、合作式教学，突出学生主体地位；单向灌输忽视学生的主动意义建构，不属于高效教学模式。"},
+{ch:"第十二章 教学心理",q:"下列不属于有效教学特征的是（　）。",o:["目标明确、内容科学","方法适宜、互动充分","一节课讲授的内容越多越难越有效","效果显著、达成教学目标"],a:2,e:"有效教学的特征包括目标明确、内容科学、方法适宜、互动充分、效果显著；容量过大超出学生接受范围反而降低效果，关键是促进学生的有意义学习。"}
+];
+
+var JUDGE=[
+{ch:"第一章 概论",q:"高等教育心理学的研究对象是高等教育情境中学生的学与教师的教的基本心理规律。",a:true,e:"正确。研究对象是高校「教与学」双方的心理规律，涵盖学的心理、教的心理及交往互动中的心理。"},
+{ch:"第一章 概论",q:"教育性原则要求研究应有利于被试的身心发展，不能因研究损害被试的利益。",a:true,e:"正确。教育性（发展性）原则要求把教育与研究统一，研究过程和结果都不应损害大学生、教师的身心健康与利益。"},
+{ch:"第二章 教师心理",q:"教师威信一旦建立便可一劳永逸，无需再刻意维护。",a:false,e:"错误。威信形成后需要维护与发展：做到言行一致、不断完善专业能力、尊重学生、勇于自我批评，否则会逐渐降低甚至丧失。"},
+{ch:"第二章 教师心理",q:"研究表明，专家型教师的职业倦怠水平通常显著低于新手型和熟手型教师。",a:true,e:"正确。专家型教师教学效能感高、职业情感投入深、从工作中获得的成就感强，职业倦怠（尤其情绪耗竭）显著更低。"},
+{ch:"第四章 学习理论",q:"负强化就是惩罚，两者都会使行为发生的频率降低。",a:false,e:"错误。负强化是撤销厌恶刺激，使行为频率增加；惩罚是呈现厌恶刺激或撤销愉快刺激，使行为频率降低。两者方向相反，不能混同。"},
+{ch:"第四章 学习理论",q:"消退是指曾被强化的反应之后不再给予强化，从而使该反应频率逐渐下降的现象。",a:true,e:"正确。如学生课堂上做怪相以引人发笑，若师生 consistently 不予理睬（撤除关注这一强化物），怪相行为会逐渐消失。"},
+{ch:"第三章 心理特点",q:"大学生一般处于皮亚杰认知发展的形式运算阶段。",a:true,e:"正确。形式运算阶段（11、12岁以后）以抽象逻辑思维为主，大学生抽象逻辑思维已趋成熟并占主导。"},
+{ch:"第三章 心理特点",q:"最近发展区就是个体当前已经达到的发展水平。",a:false,e:"错误。最近发展区是现有水平与潜在发展水平（在帮助下可达到的水平）之间的差距，“现有水平”只是它的下限。"},
+{ch:"第三章 心理特点",q:"皮亚杰“三山实验”表明，前运算阶段儿童的思维具有自我中心性。",a:true,e:"正确。前运算阶段（2-7岁）儿童难以站在他人视角看问题，三山实验是自我中心性的经典证据。"},
+{ch:"第十一章 动机",q:"根据耶克斯—多德森定律，动机水平越强，学习效率就越高。",a:false,e:"错误。动机与效率呈倒U型关系：动机过弱缺乏动力，动机过强引起紧张焦虑，只有适中的动机效率最高，且最佳点随任务难度变化。"},
+{ch:"第十一章 动机",q:"马斯洛认为，只有低层次需要得到百分之百满足后，高层次需要才会出现。",a:false,e:"错误。需要由低到高逐级出现，但并非绝对——低层需要基本满足即可产生高层需要，各层次还可相互重叠，不同个体占优势的需要也不同。"},
+{ch:"第十一章 动机",q:"自我效能感高的个体更倾向于选择有挑战性的任务，并能坚持更长时间。",a:true,e:"正确。自我效能感影响行为选择、努力与坚持性、思维模式和情绪反应，是重要的学习动机变量。"},
+{ch:"第十一章 动机",q:"韦纳归因理论中，“努力”属于内部、稳定、不可控的因素。",a:false,e:"错误。努力是内部、不稳定、可控的因素——正因其可控，引导学生把成败归因于努力最有利于激发后续动机。"},
+{ch:"第八章 品德",q:"道德认知是品德形成的基础，道德行为是衡量个体品德水平的重要标志。",a:true,e:"正确。知、情、意、行四要素中，道德认知是基础和核心，道德行为是品德形成的最终目的和衡量标志，德育要促进学生知行统一。"},
+{ch:"第七章 创造性",q:"创造性与智力成正比，高智力者必有高创造性。",a:false,e:"错误。高智力是高创造性的必要条件而非充分条件；智力与创造性呈非线性关系，高创造性者智商一般在中上，但高智商者不一定有高创造性。"},
+{ch:"第四章 学习理论",q:"大学生学习的突出特点是专业性、自主性、探究性、创造性和实践性。",a:true,e:"正确。大学生的学习围绕专业方向展开，强调自主安排、探究发现、勇于创新并注重理论联系实际。"},
+{ch:"第八章 品德",q:"疏导原则是指对学生的思想问题要以防、堵为主，禁止其接触不良信息。",a:false,e:"错误。疏导原则要求循循善诱、以理服人，从提高道德认识入手、因势利导地引导学生，而不是简单堵塞禁止。"},
+{ch:"第十二章 教学心理",q:"课堂管理就是维持课堂纪律，只要纪律好就说明课堂管理好。",a:false,e:"错误。课堂管理的核心目标：保障学生学习顺利进行、培养学生自律能力、优化课堂心理气氛，纪律只是手段之一而非全部。"}
+];
+
+var ESSAY=[
+{ch:"第四章 学习理论",q:"【举例说明】正强化、负强化、惩罚与消退的区别。",
+pts:["正强化：呈现愉快刺激，使行为频率增加；","负强化：撤销厌恶刺激，使行为频率增加；","惩罚：呈现厌恶刺激或撤销愉快刺激，使行为频率降低；","消退：曾经被强化的反应不再得到强化，行为频率下降。"],
+demo:"示例：学生积极发言，教师当众表扬（正强化）；学生按时交作业即取消其值日任务（负强化）；学生旷课被通报批评（惩罚）；学生课堂做怪相引人发笑，师生一致不予理睬，怪相逐渐消失（消退）。"},
+{ch:"第三章 心理特点",q:"【举例说明】维果茨基的“最近发展区”及其对大学教学的启示。",
+pts:["定义：现有发展水平与在成人（教师）帮助下可达到的潜在发展水平之间的差距；","教学应走在发展的前面，立足于最近发展区；","启示：提供适度挑战性任务；给予“支架”式帮助并逐步撤除；因材施教。"],
+demo:"示例：大一学生目前只能独立完成文献综述提纲（现有水平），在导师提供范例、分步指导下能完成规范的小论文（潜在水平），二者差距即最近发展区。随着学生能力提高，导师指导逐步减少，最终学生独立完成——这就是支架式教学的运用。"},
+{ch:"第十一章 动机",q:"【举例说明】耶克斯—多德森定律。",
+pts:["动机强度与工作效率呈倒U型曲线关系；","中等强度动机时效率最高；","最佳动机水平随任务难度变化：任务越难，最佳动机水平越低；任务越容易，最佳动机水平可偏高。"],
+demo:"示例：英语单词听写属较容易任务，动机强一些效率更高；撰写学位论文、参加数学建模竞赛属困难任务，需保持平和、适度紧张的动机状态效率最佳。考前过度焦虑（动机过强）会“大脑一片空白”，毫无动力（动机过弱）也考不好。"},
+{ch:"第五章 知识获得",q:"【举例说明】陈述性知识与程序性知识的区别与联系。",
+pts:["陈述性知识回答“是什么”“为什么”，可以言传；程序性知识回答“怎么做”，通过操作表现；","程序性知识往往以陈述性知识为基础，经练习内化、自动化；","两者在学习中相互转化、相互支持。"],
+demo:"示例：能说出“光的折射定律”的内容属陈述性知识；能动手调整鱼叉角度准确叉到水中的鱼属程序性知识。学生先学习操作规程（陈述性），反复练习后闭着眼睛也能熟练完成（程序性），说明陈述性知识经变式练习可转化为程序性知识。"},
+{ch:"第六章 思维与问题解决",q:"【举例说明】定势与功能固着对问题解决的影响。",
+pts:["定势：先前活动形成的心理准备状态，使人以固定方式解决问题；对同类问题有积极作用，对变化了的新问题有消极作用；","功能固着：只看到物体的惯常功能，阻碍发现新用途，是定势的特殊表现；","克服方法：变式训练、发散思维训练、换个角度定义问题。"],
+demo:"示例：长期用“设未知数列方程”的套路解题，遇到可用算术巧解的题仍硬套方程而绕远路（定势）；邓克尔“蜡烛问题”中被试想不到把图钉盒钉在墙上当烛台（功能固着）。"},
+{ch:"第四章 学习理论",q:"【举例说明】奥苏贝尔有意义接受学习及其条件。",
+pts:["实质：新知识与认知结构中原有适当观念建立非人为的、实质性的联系；","客观条件：学习材料本身具有逻辑意义；","主观条件：①学习者认知结构中有可利用的适当观念（固定点）；②学习者有有意义学习的心向，主动联系、力求理解。"],
+demo:"示例：学生先掌握“函数”概念，再学习“导数”时主动将其理解为“函数的变化率”，与已有观念建立合乎逻辑的联系——这是有意义接受学习；反之，不理解内涵而死背导数公式，即便听讲也是机械学习。"},
+{ch:"第四章 学习理论",q:"【举例说明】班杜拉观察学习的过程。",
+pts:["观察学习经四个过程完成：注意过程→保持过程→动作再现过程→动机过程；","强化（直接强化、替代强化、自我强化）主要影响行为的动机与表现。"],
+demo:"示例：师范生观摩名师课堂，注意到其提问追问技巧（注意），用笔记和录像记住操作要点（保持），在微格教学中模仿演练（动作再现），获指导教师好评后更愿意在真实课堂中运用（动机）。"},
+{ch:"第十一章 动机",q:"【举例说明】韦纳归因理论，并说明如何对学业失败的学生进行积极归因训练。",
+pts:["三维度：原因源（内部/外部）、稳定性（稳定/不稳定）、可控性（可控/不可控）；","常见归因：能力（内、稳、不可控）、努力（内、不稳、可控）、任务难度（外、稳、不可控）、运气（外、不稳、不可控）；","把失败归因于能力易导致习得性无助；引导归因于努力、方法等可控因素，可保持成功期望、提高动机。"],
+demo:"示例：挂科学生说“我天生学不好数学”，教师引导其分析“本学期投入不足、刷题方法不当”（可控原因），共同制定小步子计划；下次测验进步后及时肯定其努力，逐渐形成“努力+方法”的积极归因风格。"},
+{ch:"第十一章 动机",q:"【举例说明】马斯洛需要层次理论在高校学生教育管理中的应用。",
+pts:["需要由低到高：生理→安全→归属与爱→尊重→自我实现；","缺失性需要（前四种）得到基本满足是个体成长的前提；先满足基本需要，再激发高层次需要；","应用：解决学生现实困难、营造归属感，再通过学业与科研平台促其自我实现。"],
+demo:"示例：贫困生因生活费无着（生理需要）无法安心学习，学校先提供助学金和勤工助学岗位；新生宿舍矛盾使其缺乏归属感，辅导员组织宿舍团建；在此基础上鼓励其参加学科竞赛、进课题组，满足自我实现的需要。"},
+{ch:"第七章 创造性",q:"【举例说明】创造性的流畅性、变通性与独特性。",
+pts:["流畅性：单位时间内产生有效观念的数量；","变通性：观念类别的广度，能突破思维定势、多角度思考；","独特性：观念新颖独到、与众不同。"],
+demo:"示例：“回形针用途”测验中，30秒内说出15种用途体现流畅性；用途跨越文具、工具、装饰、艺术等不同类别体现变通性；提出“可作DNA双螺旋模型支架”这样罕见独到的想法体现独特性。"}
+];
+
+var CASES=[
+{ch:"第二章 教师心理",t:"“疲惫的李老师”——教师职业倦怠",
+bg:"李老师在某高校任教第9年，常年重复讲授同一门公共课。近期评职称失利后，他常感精力耗尽，一想到上课就疲惫；对学生日益冷淡，作业草草批改，学生提问也懒得细答，私下说“学生怎么样与我无关”；他还觉得“教书没什么意思，这辈子不会有太大成就”，甚至萌生离职念头。",
+q:"问题：(1) 李老师的表现符合教师职业倦怠的哪些维度？请结合材料分析。(2) 分析其职业倦怠的可能原因。(3) 提出调适的建议。",
+pts:["①情绪耗竭：精力耗尽、一想到上课就疲惫，是倦怠的核心维度；","②去个性化：对学生冷淡敷衍，“学生与我无关”，以消极麻木态度对待工作对象；","③低个人成就感：认为教书没意思、不会有成就，自我评价和成就体验降低。","原因分析：职业因素（多年重复劳动、挑战性不足）；组织因素（评职称失利、晋升受挫、缺乏组织支持）；个人因素（应对方式单一、期望与现实落差）。","建议：认知调整，合理设定期望，正确看待挫折；主动获取社会支持（同事交流、教学共同体、家庭）；丰富教学科研生活，进行教学创新、参与科研项目，向专家型教师发展；学校层面应完善评价激励机制、提供发展平台；必要时寻求专业心理辅导。"]},
+{ch:"第十一章 动机",t:"“考前焦虑的小陈”——耶克斯—多德森定律",
+bg:"大三学生小陈的父母要求她“必须考上名校研究生”，她给自己定下“每门功课必须90分以上”的目标。每次考试前她都失眠、心慌、手抖，平时会做的题目一到考场就“大脑一片空白”，成绩不升反降，越考越怕，形成恶性循环。",
+q:"问题：请运用动机理论分析小陈考试失常的原因，并提出辅导建议。",
+pts:["①耶克斯—多德森定律：动机强度与工作效率呈倒U型关系，中等动机效率最高；动机过强引起高度焦虑，注意和认知资源被担忧占用，反而妨碍回忆和思维。","②学习与考试属复杂任务，其最佳动机水平本应偏低；小陈“必须90分以上”“必须考上”的绝对化目标使动机过强、焦虑过度，导致平时会做的题考场做不出。","辅导建议：帮助其把“必须考到多少分”的结果性目标调整为“掌握知识、正常发挥”的过程性目标；进行放松训练（深呼吸、渐进式肌肉放松）和系统脱敏缓解考试焦虑；引导正确认识考试意义，一次考试不等于人生；与家长沟通，降低外部压力源；创造成功体验，提升自我效能感。"]},
+{ch:"第十一章 动机",t:"“破罐破摔的小刘”——归因与习得性无助",
+bg:"小刘高等数学连续两次挂科。他说：“我高中数学就差，天生不是学数学的料，再努力也没用。”从此他不再上自习，作业靠抄同学，还觉得“认真努力却还挂科才丢人”。辅导员找他谈心，他直言“练了也没希望”。",
+q:"问题：请用韦纳归因理论分析小刘的归因模式及其后果，并为他设计一份归因训练方案。",
+pts:["①归因分析：“天生不是学数学的料”是把失败归因于能力——内部、稳定、不可控的因素。","②后果：稳定归因使他对未来成败的期望丧失（“再努力也没用”），产生习得性无助，进而在行为上放弃努力（不上自习、抄作业）；可控感缺失还使其用“不努力”来保护自尊（怕“努力了还失败丢人”）。","③归因训练方案：a.接纳情绪，建立信任；b.与其共同分析试卷和作业，找出真实可控原因（练习量不足、方法不当）；c.引导其将失败归因于努力与方法等内部、可控因素；d.制定小步子、可达成的小目标（如每天两道题、先攻一章）；e.取得点滴进步及时肯定强化，积累成功体验；f.持续巩固，形成“努力+方法”的积极归因风格，同时提升自我效能感。"]},
+{ch:"第十二章 教学心理",t:"“满堂灌的王老师”——有效教学与学习理论",
+bg:"王老师备课非常认真，每节课的PPT多达两百页。他从头讲到尾赶进度，几乎不提问、不讨论，他认为“我讲得越全，学生学得越多”。但学生反映跟不上、听一会儿就走神，期中测验平均分年级最低，课堂沉闷，无人提问，王老师很委屈。",
+q:"问题：(1) 请运用有效教学的特征和相关学习理论分析王老师教学中存在的问题。(2) 提出改进建议。",
+pts:["①有效教学特征角度：目标明确不等于容量越大越好；王老师方法单一、互动严重不足，未能激发学生参与；“内容科学”也要以学生可接受、能内化为前提。","②学习理论角度：奥苏贝尔指出接受学习不等于机械学习，讲授必须与学生原有知识建立实质性联系、激发有意义学习的心向，否则沦为机械灌输；建构主义认为学习是学生主动的意义建构，需要情境、协作、会话的支撑，单向讲授剥夺了学生的建构过程；人本主义强调学生的情感与参与。","③改进建议：精讲学科基本结构（基本概念原理），突出重点难点（布鲁纳）；采用启发式提问、案例讨论、小组合作学习，增加师生与生生互动；采用任务驱动、探究式教学，让学生在做中学；加强形成性评价与及时反馈；关注学生反馈，动态调整教学进度与方法。"]},
+{ch:"第八章 品德",t:"“抄袭风波”——品德结构与德育原则",
+bg:"大二学生小周为争取奖学金抄袭他人论文并获了奖，后被查实。辅导员当众严厉训斥，宣布其“品德败坏”，取消评奖资格，小周情绪低落并产生对立情绪。班主任李老师随后单独与他谈心，既严肃指出抄袭违反学术诚信，又肯定他想上进的初衷，要求他公开说明情况并独立重写论文。此后小周诚实守信、学习踏实，再未出现学术不端。",
+q:"问题：(1) 结合品德心理结构（知、情、意、行）分析对小周的教育过程。(2) 分析两位老师的处理分别体现或违背了哪些德育原则。",
+pts:["①品德结构分析：道德认知——通过谈心使小周认识抄袭违反学术诚信（认知是基础）；道德情感——严肃批评唤起羞愧感，同时保护其上进心（情感是动力）；道德意志与道德行为——要求其公开说明、独立重写论文并坚持诚信行为（行为是衡量标志），实现了知行统一。","②辅导员违背了：疏导原则（未循循善诱、以理服人，而是当众训斥）；尊重学生与严格要求相结合原则（给学生贴“品德败坏”标签，伤害自尊）。","③李老师体现了：疏导原则（摆事实讲道理、以理服人）；尊重与严格要求相结合（肯定上进心，同时坚决要求改正）；知行统一原则（在重写论文、公开说明的行动中养成诚信行为）；因材施教（针对小周上进但走捷径的特点个别引导）。"]},
+{ch:"第二章 教师心理",t:"“从站稳讲台到读懂学生”——教师专业成长",
+bg:"张老师入职第一年，最关心“学生喜不喜欢我”“领导同事怎么评价我”，备课以自我展示为中心。第四年，他关注的是“这节课内容讲完没有”“进度赶不赶得上”“考试成绩如何”。第八年，他开始依据学生基础差异分层设计任务，课堂提问兼顾不同水平的学生，并坚持撰写教学反思，最终成长为省级教学名师。",
+q:"问题：请运用教师专业成长阶段理论分析张老师的发展历程，并说明如何促进新教师的专业成长。",
+pts:["①福勒和布朗三阶段理论：第一年处于关注生存阶段——关注人际关系、被接纳与生存适应；第四年处于关注情境阶段——关注教学任务完成、进度与成绩；第八年进入关注学生阶段——关注学生个体差异、因材施教。能否自觉关注学生是衡量教师是否成熟的重要标志。","②张老师的路径体现了从新手型教师经熟手型向专家型教师的发展，教学反思在其成长中发挥了关键作用（波斯纳：经验＋反思＝成长）。","③促进新教师成长：加强教学反思（写反思日记、课例研究）；观摩优秀教师课堂、师徒结对；开展行动研究，把问题变课题；参与教师学习共同体；在实践中锻炼，积累实践性知识；学校提供入职辅导与发展性评价。"]},
+{ch:"第七章 创造性",t:"“标准答案”——创造性培养",
+bg:"钱老师的课堂上，有学生提出“教科书上的这个结论有没有可能被推翻”，钱老师回答：“别想这些歪门邪道，考试就按标准答案答。”此后，课堂上主动提问的学生越来越少，作业答案千篇一律，班里的“点子大王”也变得沉默了。",
+q:"问题：请运用创造性培养的相关理论分析钱老师做法的不当之处，并提出改进建议。",
+pts:["①不当之处：环境因素是影响创造性的重要变量，心理安全与心理自由是创造发挥的前提；钱老师否定质疑、唯一“标准答案”，营造了紧张压抑的课堂气氛，压抑了学生的好奇心、求知欲和发散思维，扼杀了创造性。","②改进建议：营造宽松、民主、支持性的课堂氛围，允许出错，延迟评判；实行启发式教学，保护鼓励学生的质疑与求异思维（“学起于思，思源于疑”）；进行发散思维训练（如一题多解、头脑风暴），克服定势与功能固着；改革评价方式，鼓励独特性和新颖性的答案；引导学生参与科研实践，在真实问题中激发创造动机；教师自身树立创造型学生的正确观念——创造性强者往往“淘气”“好奇”，不应视为捣乱。"]}
+];
+
+/* ================= 状态 ================= */
+var LS_KEY="gdpsylx-v1";
+var TYPES={single:SINGLE.length,judge:JUDGE.length,essay:ESSAY.length,cases:CASES.length};
+var TABS=[
+  {k:"home",n:"考情速览"},
+  {k:"single",n:"单选题"},{k:"judge",n:"判断题"},
+  {k:"essay",n:"举例说明"},{k:"cases",n:"案例分析"},
+  {k:"wrong",n:"错题重做"}
+];
+var curTab="home";
+var store=loadStore();
+var order={single:idxList(SINGLE),judge:idxList(JUDGE),essay:idxList(ESSAY),cases:idxList(CASES)};
+
+function idxList(arr){var a=[];for(var i=0;i<arr.length;i++)a.push(i);return a}
+function loadStore(){
+  try{var s=JSON.parse(localStorage.getItem(LS_KEY)||"{}");
+    return {single:s.single||{},judge:s.judge||{},essay:s.essay||{},cases:s.cases||{}};
+  }catch(e){return {single:{},judge:{},essay:{},cases:{}}}
+}
+function saveStore(){try{localStorage.setItem(LS_KEY,JSON.stringify(store))}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+function countStat(t){
+  var d=store[t],data=DATA(t),done=0,ok=0;
+  for(var k in d){var qi=+k;if(!d.hasOwnProperty(k)||!(qi in data))continue;
+    if(t==="single"){done++;if(d[k]===data[qi].a)ok++}
+    else if(t==="judge"){done++;if(d[k]===data[qi].a)ok++}
+    else{done++;if(d[k]==="got")ok++}
+  }
+  return {done:done,ok:ok,total:data.length};
+}
+function DATA(t){return t==="single"?SINGLE:t==="judge"?JUDGE:t==="essay"?ESSAY:CASES}
+
+function wrongList(t){
+  var d=store[t],data=DATA(t),w=[];
+  for(var k in d){if(!d.hasOwnProperty(k))continue;var qi=+k;
+    if(t==="single"){if(d[k]!==data[qi].a)w.push(qi)}
+    else if(t==="judge"){if(d[k]!==data[qi].a)w.push(qi)}
+  }
+  return w;
+}
+
+/* ================= 渲染 ================= */
+function renderTabs(){
+  var h="";
+  TABS.forEach(function(tb){
+    var badge="";
+    if(tb.k==="single")badge='<span class="n">'+SINGLE.length+"</span>";
+    if(tb.k==="judge")badge='<span class="n">'+JUDGE.length+"</span>";
+    if(tb.k==="essay")badge='<span class="n">'+ESSAY.length+"</span>";
+    if(tb.k==="cases")badge='<span class="n">'+CASES.length+"</span>";
+    if(tb.k==="wrong"){
+      var w=wrongList("single").length+wrongList("judge").length;
+      if(w>0)badge='<span class="n">'+w+"</span>";
+    }
+    h+='<div class="tab'+(curTab===tb.k?" on":"")+'" onclick="goTab(\''+tb.k+'\')">'+tb.n+badge+"</div>";
+  });
+  document.getElementById("tabs").innerHTML=h;
+}
+
+function statChip(t,label){
+  var s=countStat(t);
+  var rate=s.done?Math.round(s.ok/s.done*100):0;
+  return '<span class="chip">'+label+"　已做 <b>"+s.done+"</b>/"+s.total+"　正确 <b>"+s.ok+"</b>　正确率 <b>"+rate+"%</b></span>";
+}
+
+function renderStatbar(){
+  var el=document.getElementById("statbar");
+  if(curTab==="home"){
+    el.innerHTML="";
+    return;
+  }
+  if(curTab==="wrong"){
+    var w=wrongList("single").length+wrongList("judge").length;
+    el.innerHTML='<span class="chip">错题本　待消灭 <b style="color:var(--red)">'+w+'</b> 题</span><span class="sp"></span>'+
+      '<span class="chip" style="font-family:var(--kai)">答对后自动移出错题本</span>';
+    return;
+  }
+  var label={single:"单选题",judge:"判断题",essay:"举例说明",cases:"案例分析"}[curTab];
+  var right='<span class="sp"></span>';
+  if(curTab==="single"||curTab==="judge"){
+    right+='<label class="toggle"><input type="checkbox" id="shuf" onchange="toggleShuffle()"'+(shuffled?" checked":"")+'>乱序刷题</label>';
+  }
+  right+='<button class="btn warn" onclick="resetType(\''+curTab+'\')">重置本部分</button>';
+  el.innerHTML=statChip(curTab,label)+right;
+}
+
+function qheadHTML(no,ch){
+  return '<div class="qhead"><span class="qno">'+no+"</span><span class=\"qch\">"+esc(ch)+"</span></div>";
+}
+
+function renderSingle(){
+  var h="";
+  order.single.forEach(function(qi,pos){
+    var q=SINGLE[qi],pick=store.single[qi];
+    var locked=(pick!==undefined);
+    h+='<div class="qcard"><div class="opts-holder">'+qheadHTML(pos+1,q.ch);
+    h+='<div class="qtext">'+esc(q.q)+"</div>";
+    h+='<div class="opts'+(locked?" locked":"")+'">';
+    q.o.forEach(function(o,oi){
+      var cls="opt";
+      if(locked){
+        if(oi===q.a)cls+=" right";
+        else if(oi===pick)cls+=" pick";
+        else cls+=" dim";
+      }
+      h+='<div class="'+cls+'" onclick="ansSingle('+qi+","+oi+')"><span class="L">'+String.fromCharCode(65+oi)+'</span><span class="T">'+esc(o)+"</span></div>";
+    });
+    h+="</div>";
+    if(locked){
+      var ok=pick===q.a;
+      h+='<div class="fb '+(ok?"ok":"no")+'"><span class="tag">'+(ok?"✓ 答对了":"✗ 答错了")+"</span><span>正确答案："+String.fromCharCode(65+q.a)+"</span></div>";
+      h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    }
+    h+="</div></div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderJudge(){
+  var h="";
+  order.judge.forEach(function(qi,pos){
+    var q=JUDGE[qi],pick=store.judge[qi];
+    var locked=(pick!==undefined);
+    h+='<div class="qcard">'+qheadHTML(pos+1,q.ch);
+    h+='<div class="qtext">'+esc(q.q)+"</div>";
+    h+='<div class="jbtns'+(locked?" locked":"")+'">';
+    var rightVal=q.a?0:1;
+    ["正确","错误"].forEach(function(txt,val){
+      var cls="jbtn";
+      if(locked){
+        if(val===rightVal)cls+=" right";
+        else if(val===(pick?0:1))cls+=" pick";
+      }
+      h+='<div class="'+cls+'" onclick="ansJudge('+qi+','+val+')">'+txt+"</div>";
+    });
+    h+="</div>";
+    if(locked){
+      var ok=pick===q.a;
+      h+='<div class="fb '+(ok?"ok":"no")+'"><span class="tag">'+(ok?"✓ 答对了":"✗ 答错了")+"</span><span>正确答案："+(q.a?"正确":"错误")+"</span></div>";
+      h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    }
+    h+="</div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderSubjective(type){
+  var arr=DATA(type),st=store[type],h="";
+  order[type].forEach(function(qi,pos){
+    var q=arr[qi],rec=st[qi]||{};
+    h+='<div class="qcard">'+qheadHTML(pos+1,q.ch);
+    if(type==="cases"){
+      h+='<div class="qtext" style="font-size:16.5px">【案例分析】'+esc(q.t)+"</div>";
+      h+='<div class="mat"><span class="lb">材料：</span>'+esc(q.bg)+"</div>";
+      h+='<div class="qs">'+esc(q.q)+"</div>";
+    }else{
+      h+='<div class="qtext">'+esc(q.q)+"</div>";
+    }
+    h+='<textarea class="sheet" rows="5" placeholder="（先在此写下你的答案要点，再对照参考答案）" oninput="saveText(\''+type+"',"+qi+',this.value)">'+esc(rec.text||"")+"</textarea>";
+    h+='<div class="refbtns">';
+    if(!rec.show)h+='<button class="btn" onclick="showRef(\''+type+"',"+qi+')">对照参考答案</button>';
+    else{
+      h+='<button class="btn mini" onclick="hideRef(\''+type+"',"+qi+')">收起参考答案</button>';
+    }
+    h+="</div>";
+    if(rec.show){
+      h+='<div class="ref"><span class="lb">【参考答案要点】</span><ul>';
+      q.pts.forEach(function(p){h+="<li>"+esc(p)+"</li>"});
+      h+="</ul>";
+      if(q.demo)h+='<div class="demo">'+esc(q.demo)+"</div>";
+      h+="</div>";
+      h+='<div class="selfmark">自评掌握情况：';
+      h+='<button class="btn'+(rec.mark==="got"?" did":"")+'" onclick="markSub(\''+type+"',"+qi+',\'got\')">✓ 已掌握</button>';
+      h+='<button class="btn'+(rec.mark==="again"?" again":"")+'" onclick="markSub(\''+type+"',"+qi+',\'again\')">✗ 需巩固</button>';
+      h+="</div>";
+    }
+    h+="</div>";
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderWrong(){
+  var ws=wrongList("single"),wj=wrongList("judge"),h="";
+  if(!ws.length&&!wj.length){
+    h='<div class="note" style="text-align:center;padding:50px 20px"><h3 style="text-align:center">🎉 错题本是空的</h3><p style="text-align:center">做完单选题、判断题后，答错的题目会自动收进来。<br>在下方重做，答对即可移出错题本。</p></div>';
+  }
+  ws.forEach(function(qi,i){
+    var q=SINGLE[qi],pick=store.single[qi];
+    h+='<div class="qcard">'+qheadHTML("错"+(i+1),q.ch)+"<div class=\"qtext\">"+esc(q.q)+"</div>";
+    h+='<div class="opts locked">';
+    q.o.forEach(function(o,oi){
+      var cls="opt";
+      if(oi===q.a)cls+=" right";else if(oi===pick)cls+=" pick";else cls+=" dim";
+      h+='<div class="'+cls+'"><span class="L">'+String.fromCharCode(65+oi)+'</span><span class="T">'+esc(o)+"</span></div>";
+    });
+    h+="</div>";
+    h+='<div class="fb no"><span class="tag">✗ 曾答错</span><span>正确答案：'+String.fromCharCode(65+q.a)+"</span></div>";
+    h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    h+='<div class="redo"><button class="btn mini warn" onclick="redoOne(\'single\','+qi+')">重做此题</button></div></div>';
+  });
+  wj.forEach(function(qi,i){
+    var q=JUDGE[qi],pick=store.judge[qi];
+    h+='<div class="qcard">'+qheadHTML("错"+(ws.length+i+1),q.ch)+"<div class=\"qtext\">"+esc(q.q)+"</div>";
+    h+='<div class="fb no"><span class="tag">✗ 曾答错</span><span>你选了「'+(pick?"正确":"错误")+"」，正确答案："+(q.a?"正确":"错误")+"</span></div>";
+    h+='<div class="exp"><span class="lb">解析</span>'+esc(q.e)+"</div>";
+    h+='<div class="redo"><button class="btn mini warn" onclick="redoOne(\'judge\','+qi+')">重做此题</button></div></div>';
+  });
+  document.getElementById("panel").innerHTML=h;
+}
+
+function renderHome(){
+  var s1=countStat("single"),s2=countStat("judge"),s3=countStat("essay"),s4=countStat("cases");
+  var total=s1.total+s2.total+s3.total+s4.total;
+  document.getElementById("totalN").textContent=total;
+  var h='<div class="hero">';
+  h+='<div class="note"><h3><span class="no">1</span>广东考情速览（依据公开检索信息整理）</h3>'+
+     "<ul>"+
+     "<li><b>考试形式：</b>《高等教育学》《高等教育心理学》两门为<b>全省统一命题、统一时间闭卷考试</b>，时长约 2 小时，满分 100 分，60 分合格。</li>"+
+     "<li><b>指定教材：</b>张积家主编《高等教育心理学》（高等教育出版社），即本卷命题依据。</li>"+
+     "<li><b>命题来源：</b>广东省高校师资培训中心统一组建题库、集中阅卷，试题覆盖面广、重基础。</li>"+
+     "<li><b>成绩用途：</b>“两学”成绩是申请高校教师资格认定的必要条件，有效期五年。</li>"+
+     "</ul></div>";
+  h+='<div class="note"><h3><span class="no">2</span>常考点分布（结合公开题库高频考点）</h3>'+
+     "<ul>"+
+     "<li><span class='k'>⭐ 最核心：</span>第十一章动机——耶克斯—多德森定律、马斯洛需要层次、麦克利兰成就需要、自我效能感、韦纳归因（案例分析最爱考）。</li>"+
+     "<li><span class='k'>⭐ 高频：</span>第四章学习理论——斯金纳强化四种类型辨析、奥苏贝尔有意义学习、布鲁纳发现学习、班杜拉观察学习、建构主义与人本主义。</li>"+
+     "<li><span class='k'>⭐ 高频：</span>教师心理——成长三阶段、新手到专家、职业倦怠三维度。</li>"+
+     "<li><span class='k'>常考：</span>皮亚杰/埃里克森/维果茨基、问题解决四阶段与影响因素、创造性三特征、品德知情意行、科尔伯格三水平六阶段。</li>"+
+     "</ul></div>";
+  h+='<div class="note"><h3><span class="no">3</span>答题要领</h3>'+
+     "<ul>"+
+     "<li><b>单选/判断：</b>抓关键词辨析——尤其“负强化 vs 惩罚”“定势 vs 功能固着”“流畅性 vs 变通性 vs 独特性”。</li>"+
+     "<li><b>举例说明：</b>先答概念要点，再给贴切例子；例子要能“反证”定义（如先说负强化定义，再举撤除厌恶刺激的例子）。</li>"+
+     "<li><b>案例分析：</b>三步走——①指认理论（是什么）；②结合材料逐句对应分析（怎么体现）；③提出对策建议（怎么办）。切忌只抄理论不结合材料。</li>"+
+     "</ul>"+
+     '<div class="src">参考来源：广东省高校师资培训中心《广东省高等学校教师岗前培训考试管理办法》、各高校岗前培训通知及公开复习题库。</div></div>';
+  h+='<div class="note"><h3><span class="no">4</span>我的练习进度'+(s1.done||s2.done||s3.done||s4.done?"":"（本机自动保存，换浏览器/清除缓存会重置）")+"</h3>";
+  h+='<div class="summary">'+
+     '<div class="scard"><div class="t">单选题</div><div class="v">'+s1.ok+'<small> / '+s1.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">判断题</div><div class="v">'+s2.ok+'<small> / '+s2.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">举例说明 · 已掌握</div><div class="v">'+s3.ok+'<small> / '+s3.total+" 题</small></div></div>"+
+     '<div class="scard"><div class="t">案例分析 · 已掌握</div><div class="v">'+s4.ok+'<small> / '+s4.total+" 题</small></div></div>";
+  var doneAll=s1.done+s2.done+s3.done+s4.done,okAll=s1.ok+s2.ok+s3.ok+s4.ok;
+  h+='<div class="scard red"><div class="t">客观题总正确率</div><div class="v">'+((s1.done+s2.done)?Math.round((s1.ok+s2.ok)/(s1.done+s2.done)*100):0)+'%</div></div>'+
+     '<div class="scard"><div class="t">累计已练</div><div class="v">'+doneAll+'<small> / '+total+" 题</small></div></div></div>";
+  h+='<div style="margin-top:14px"><button class="btn warn" onclick="if(confirm(\'确定清空全部作答记录吗？\'))resetAll()">清空全部记录，从头再刷</button></div>';
+  h+="</div></div>";
+  document.getElementById("panel").innerHTML=h;
+}
+
+function render(){
+  renderTabs();renderStatbar();
+  if(curTab==="home")renderHome();
+  else if(curTab==="single")renderSingle();
+  else if(curTab==="judge")renderJudge();
+  else if(curTab==="essay")renderSubjective("essay");
+  else if(curTab==="cases")renderSubjective("cases");
+  else renderWrong();
+  window.scrollTo({top:0});
+}
+
+/* ================= 交互 ================= */
+function goTab(k){curTab=k;render()}
+function ansSingle(qi,oi){
+  if(store.single[qi]!==undefined)return;
+  store.single[qi]=oi;saveStore();render();
+}
+function ansJudge(qi,val){
+  if(store.judge[qi]!==undefined)return;
+  store.judge[qi]=(val===0);saveStore();render();
+}
+var shuffled=false;
+function toggleShuffle(){
+  var cb=document.getElementById("shuf");
+  shuffled=!!cb.checked;
+  ["single","judge"].forEach(function(t){
+    order[t]=idxList(DATA(t));
+    if(shuffled){/* Fisher-Yates */
+      var a=order[t];
+      for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp}
+    }
+  });
+  render();
+}
+function saveText(type,qi,val){
+  var rec=store[type][qi]||{};rec.text=val;store[type][qi]=rec;
+  clearTimeout(saveText._t);
+  saveText._t=setTimeout(saveStore,400);
+}
+function showRef(type,qi){var rec=store[type][qi]||{};rec.show=true;store[type][qi]=rec;saveStore();render()}
+function hideRef(type,qi){var rec=store[type][qi]||{};rec.show=false;store[type][qi]=rec;saveStore();render()}
+function markSub(type,qi,m){var rec=store[type][qi]||{};rec.mark=m;store[type][qi]=rec;saveStore();render()}
+function redoOne(type,qi){delete store[type][qi];saveStore();render()}
+function resetType(t){
+  if(!confirm("确定重置本部分的所有作答记录吗？"))return;
+  store[t]={};saveStore();render();
+}
+function resetAll(){store={single:{},judge:{},essay:{},cases:{}};saveStore();render()}
+
+document.getElementById("totalN").textContent=SINGLE.length+JUDGE.length+ESSAY.length+CASES.length;
+render();
+</script>
+</body>
+</html>
